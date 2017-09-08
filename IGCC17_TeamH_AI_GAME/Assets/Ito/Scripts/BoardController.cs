@@ -24,8 +24,8 @@ public class BoardController : MonoBehaviour {
             for(int j = 0;j < _width;j++)
             {
                 GameObject tile = Instantiate(_tilePrefab);
-                tile.transform.position = new Vector3(j * _tileSize, 0, i * _tileSize)
-                                        - new Vector3((_width - 1) * _tileSize / 2,0,(_height - 1) * _tileSize / 2);
+                tile.transform.position = new Vector3(j * _tileSize, i * _tileSize, 0)
+                                        - new Vector3((_width - 1) * _tileSize / 2, (_height - 1) * _tileSize / 2, 0);
                 _tileTable[i, j] = tile.GetComponent<Tile>();
                 _tileTable[i, j].SetPosition(j, i);
             }
@@ -34,7 +34,7 @@ public class BoardController : MonoBehaviour {
 
     public Tile GetTile(int h, int w)
     {
-        if (h > 0 || h < _height || w > 0 || w < _width)
+        if (h < 0 || h > _height || w < 0 || w > _width)
             return null;
         return _tileTable[h, w];
     }

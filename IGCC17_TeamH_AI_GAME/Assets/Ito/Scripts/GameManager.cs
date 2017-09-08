@@ -65,16 +65,19 @@ public class GameManager : MonoBehaviour {
 
     private void Action()
     {
-
+        _gameCondition = GAME_CONDITION.BATTLE;
     }
 
     private void Battle()
     {
-
+        // winner is next turn
+        // if currentPlayer is lose
+        _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+        _gameCondition = GAME_CONDITION.ENDPROCESS;
     }
 
     private void EndProcess()
     {
-
+        _gameCondition = GAME_CONDITION.SELECT;
     }
 }
