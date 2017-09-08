@@ -34,7 +34,7 @@ public class BoardController : MonoBehaviour {
 
     public Tile GetTile(int h, int w)
     {
-        if (h < 0 || h > _height || w < 0 || w > _width)
+        if (h < 0 || h >= _height || w < 0 || w >= _width)
             return null;
         return _tileTable[h, w];
     }
@@ -59,5 +59,25 @@ public class BoardController : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    public Tile SlideMove(int startX, int startY, int vecX, int vecY)
+    {
+        int x = startX;
+        int y = startY;
+
+        do
+        {
+            x += vecX;
+            y += vecY;
+            if (GetTile(y, x) && GetTile(y, x).OnPiece())
+            {
+                break;
+            }
+        } while (y >= 0 && y < _height && x >= 0 && x < _width);
+
+        x -= vecX;
+        y -= vecY;
+        return GetTile(y, x);
     }
 }
