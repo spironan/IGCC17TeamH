@@ -25,9 +25,9 @@ public class CharController : MonoBehaviour {
         _possessionMagician = 2;
         _currentChara = null;
 
-        _archerPrefab = Resources.Load("Prefab/ICharacter") as GameObject;
-        _fighterPrefab = Resources.Load("Prefab/ICharacter") as GameObject;
-        _magicianPrefab = Resources.Load("Prefab/ICharacter") as GameObject;
+        _archerPrefab = Resources.Load("Prefab/Archer") as GameObject;
+        _fighterPrefab = Resources.Load("Prefab/Fighter") as GameObject;
+        _magicianPrefab = Resources.Load("Prefab/Magician") as GameObject;
     }
 	
     public void SetOwner(IPlayer owner)

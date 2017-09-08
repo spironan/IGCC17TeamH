@@ -68,4 +68,14 @@ public class ICharacter : MonoBehaviour {
     {
         _onMouse = false;
     }
+
+    public IEnumerator MovePosition(Vector3 goal)
+    {
+        Vector3 vel = (goal - transform.position) / 10;
+        for(int i = 0;i < 10;i++)
+        {
+            transform.position += vel;
+            yield return null;
+        }
+    }
 }
