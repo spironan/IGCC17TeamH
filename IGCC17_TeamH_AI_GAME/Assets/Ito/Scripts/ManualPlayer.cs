@@ -13,9 +13,11 @@ public class ManualPlayer : IPlayer {
 
     public override bool SelectCharacter(BoardController boardCon)
     {
+        ICharacter character = _charaController.GetCurrentCharacter();
+        if(character)
+            _operationUI.GetComponent<RectTransform>().position = RectTransformUtility.WorldToScreenPoint(Camera.main, character.transform.position);
         if (!Input.GetMouseButtonDown(0)) return false;
 
-        ICharacter character = _charaController.GetCurrentCharacter();
         if (_charaController.GetOnMouseCharacter())
         {
             if (character && character.X() == -1)
@@ -24,20 +26,26 @@ public class ManualPlayer : IPlayer {
             }
             character = _charaController.GetOnMouseCharacter();
             _charaController.SetCurrentCharacter(character);
-            return false;
         }
         if (character)
         {
             Tile tile = boardCon.GetOnMouseTile();
             if (tile && !tile.OnPiece())
             {
+                if (GetPlayerID() == 1 && tile.X() != boardCon.GetWidth() - 1) return false;
+                if (GetPlayerID() == 2 && tile.X() != 0) return false;
                 if (character.X() == -1)
                 {
                     _charaController.GetCharacters().Add(character);
                 }
+                else
+                {
+                    boardCon.GetTile(character.Y(), character.X()).OnPiece(false);
+                }
                 character.transform.position = tile.transform.position;
                 character.SetPosition(tile.X(), tile.Y());
-                //return true;
+                tile.OnPiece(true);
+                return true;
             }
         }
         return false;
