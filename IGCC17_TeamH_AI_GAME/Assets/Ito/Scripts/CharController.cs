@@ -1,0 +1,92 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public class CharController : MonoBehaviour {
+
+    List<ICharacter> _characters = new List<ICharacter>();
+    ICharacter _currentChara;
+
+    int _possessionArcher;
+    int _possessionFighter;
+    int _possessionMagician;
+
+    GameObject _archerPrefab;
+    GameObject _fighterPrefab;
+    GameObject _magicianPrefab;
+
+    IPlayer _owner;
+    
+    // Use this for initialization
+    void Start () {
+        _possessionArcher = 2;
+        _possessionFighter = 2;
+        _possessionMagician = 2;
+        _currentChara = null;
+
+        _archerPrefab = Resources.Load("Prefab/ICharacter") as GameObject;
+        _fighterPrefab = Resources.Load("Prefab/ICharacter") as GameObject;
+        _magicianPrefab = Resources.Load("Prefab/ICharacter") as GameObject;
+    }
+	
+    public void SetOwner(IPlayer owner)
+    {
+        _owner = owner;
+    }
+
+    public ICharacter GetCurrentCharacter()
+    {
+        return _currentChara;
+    }
+    public void SetCurrentCharacter(ICharacter chara)
+    {
+        _currentChara = chara;
+    }
+
+    public ICharacter GetOnMouseCharacter()
+    {
+        foreach(ICharacter chara in _characters)
+        {
+            if(chara.OnMouse())
+            {
+                return chara;
+            }
+        }
+        return null;
+    }
+
+    public void Generation(int type)
+    {
+
+        if(_currentChara && _currentChara.X() == -1)
+        {
+            Destroy(_currentChara.gameObject);
+        }
+        switch (type)
+        {
+            case 0:
+                _currentChara = Instantiate(_archerPrefab).GetComponent<ICharacter>();
+                break;
+            case 1:
+                _currentChara = Instantiate(_fighterPrefab).GetComponent<ICharacter>();
+                break;
+            case 2:
+                _currentChara = Instantiate(_magicianPrefab).GetComponent<ICharacter>();
+                break;
+        }
+
+        if (_owner.GetPlayerID() == 1)
+            _currentChara.transform.position = new Vector3(3, 0, 0);
+        else
+        {
+            _currentChara.transform.position = new Vector3(-3, 0, 0);
+            _currentChara.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
+        }
+    }
+
+    public List<ICharacter> GetCharacters()
+    {
+        return _characters;
+    }
+}
