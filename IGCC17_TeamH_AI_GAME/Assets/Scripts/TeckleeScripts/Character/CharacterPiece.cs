@@ -60,37 +60,7 @@ public class CharacterPiece
                 break;
         }
     }
-
-    public void NewTurn()
-    {
-        if(currState == STATE.FROZEN)
-        {
-            frozenTurns -= 1;
-            if (frozenTurns == 0)
-            {
-                currState = STATE.NEUTRAL;
-                onBoard = false;
-            }
-        }
-    }
-
-    public void ToggleAbility()
-    {
-        switch (classType)
-        {
-            case CharClass.WARRIOR:
-                break;
-
-            case CharClass.MAGICIAN:
-                break;
-        }
-    }
-
-    public void UseAbility()
-    {
-
-    }
-
+    
     //Setter(s)
 
     public void SetPosition(Vector2 position)

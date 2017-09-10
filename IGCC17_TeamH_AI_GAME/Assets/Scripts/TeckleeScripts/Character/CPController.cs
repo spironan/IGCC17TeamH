@@ -72,15 +72,6 @@ public class CPController : MonoBehaviour
         }
         return null;
     }
-
-    public void StartTurn()
-    {
-        //takeAction = false;
-        foreach (CharacterPiece charPiece in characters)
-        {
-            charPiece.NewTurn();
-        }
-    }
     
     public CharacterPiece GenerateChar(CharacterPiece.CharClass classType)
     {
