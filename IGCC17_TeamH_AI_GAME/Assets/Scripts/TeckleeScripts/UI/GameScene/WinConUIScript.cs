@@ -12,9 +12,11 @@ public class WinConUIScript : MonoBehaviour {
 	void Start () {
         images = GetComponentsInChildren<Image>();
         foreach (Image image in images)
-            Debug.Log("Image Size : " + image.name);
+            if (image.gameObject.name != name)
+                Debug.Log("Image Size : " + image.name);
         foreach (Image image in images)
-            image.gameObject.SetActive(false);
+            if (image.gameObject.name != name)
+                image.gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -24,8 +26,9 @@ public class WinConUIScript : MonoBehaviour {
             greenCounter = controller.GetGreenCount();
             for (int i = 0; i < greenCounter; ++i)
             {
-                if(!images[i].gameObject.activeSelf)
-                    images[i].gameObject.SetActive(true);
+                if (!images[i].gameObject.activeSelf)
+                    if (images[0].gameObject.name != name)
+                        images[i].gameObject.SetActive(true);
             }
         }
     }
