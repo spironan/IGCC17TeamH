@@ -42,15 +42,6 @@ public class ManualPlayer : IPlayer {
                 {
                     boardCon.GetTile(character.Y(), character.X()).OnPiece(false);
                 }
-
-                if(GetPlayerID() == 1)
-                {
-                    tile = boardCon.SlideMove(tile.X(), tile.Y(), -1, 0); 
-                }
-                else
-                {
-                    tile = boardCon.SlideMove(tile.X(), tile.Y(), 1, 0);
-                }
                 character.transform.position = tile.transform.position;
                 character.SetPosition(tile.X(), tile.Y());
                 tile.OnPiece(true);

@@ -16,6 +16,7 @@ TagManager:
   - Warrior2
   - Archer2
   - Magician2
+  - SoundSystem
   layers:
   - Default
   - TransparentFX

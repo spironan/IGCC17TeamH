@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelpScript : MonoBehaviour {
-
+public class HelpScript : MonoBehaviour
+{
     bool popUp = false;
     GameObject helpPopUp;
+
 	// Use this for initialization
 	void Start ()
     {

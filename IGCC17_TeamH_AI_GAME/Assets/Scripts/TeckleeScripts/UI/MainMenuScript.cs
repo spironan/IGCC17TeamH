@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
-public class MainMenuScript : MonoBehaviour {
-
+public class MainMenuScript : MonoBehaviour
+{
     enum MAINMENU_OPTIONS
     {
         START_GAME,
@@ -44,7 +45,8 @@ public class MainMenuScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown("down"))
         {
             if (currSelect < MAINMENU_OPTIONS.EXIT)
@@ -69,8 +71,14 @@ public class MainMenuScript : MonoBehaviour {
 
     }
 
+    public void StartGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
     public void ExitGame()
     {
         Application.Quit();
     }
+
 }
