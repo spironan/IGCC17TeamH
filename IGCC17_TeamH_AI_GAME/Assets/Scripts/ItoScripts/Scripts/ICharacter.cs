@@ -105,5 +105,14 @@ public class ICharacter : MonoBehaviour {
     {
         _onBoard = onBoard;
     }
-    
+
+    public IEnumerator ConstantMove(Vector3 goal, int flame)
+    {
+        Vector3 vel = (goal - transform.position) / flame;
+        for (int i = 0; i < flame; i++)
+        {
+            transform.position += vel;
+            yield return null;
+        }
+    }
 }

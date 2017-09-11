@@ -14,7 +14,7 @@ public class ManualPlayer : IPlayer {
     public override bool SelectCharacter(BoardController boardCon)
     {
         ICharacter character = _charaController.GetCurrentCharacter();
-        if(character)
+        if (character)
             _operationUI.GetComponent<RectTransform>().position = RectTransformUtility.WorldToScreenPoint(Camera.main, character.transform.position);
         if (!Input.GetMouseButtonDown(0)) return false;
 
@@ -32,17 +32,33 @@ public class ManualPlayer : IPlayer {
             Tile tile = boardCon.GetOnMouseTile();
             if (tile && !tile.OnPiece())
             {
-                if (GetPlayerID() == 1 && tile.X() != boardCon.GetWidth() - 1) return false;
-                if (GetPlayerID() == 2 && tile.X() != 0) return false;
                 if (character.X() == -1)
                 {
+                    if (GetPlayerID() == 1 && tile.X() != boardCon.GetWidth() - 1) return false;
+                    if (GetPlayerID() == 2 && tile.X() != 0) return false;
+                    character.transform.position = tile.transform.position;
                     _charaController.GetCharacters().Add(character);
+                    if (GetPlayerID() == 1)
+                        tile = boardCon.SlideMove(tile.X(), tile.Y(), -1, 0);
+                    else
+                        tile = boardCon.SlideMove(tile.X(), tile.Y(), 1, 0);
                 }
                 else
                 {
                     boardCon.GetTile(character.Y(), character.X()).OnPiece(false);
+                    if (character.X() + 1 == tile.X() && character.Y() == tile.Y())
+                        tile = boardCon.SlideMove(character.X(), character.Y(), 1, 0);
+                    else if (character.X() - 1 == tile.X() && character.Y() == tile.Y())
+                        tile = boardCon.SlideMove(character.X(), character.Y(), -1, 0);
+                    else if (character.X() == tile.X() && character.Y() + 1 == tile.Y())
+                        tile = boardCon.SlideMove(character.X(), character.Y(), 0, 1);
+                    else if (character.X() == tile.X() && character.Y() - 1 == tile.Y())
+                        tile = boardCon.SlideMove(character.X(), character.Y(), 0, -1);
+                    else
+                        return false;
                 }
-                character.transform.position = tile.transform.position;
+
+                StartCoroutine(character.ConstantMove(tile.transform.position, 10));
                 character.SetPosition(tile.X(), tile.Y());
                 tile.OnPiece(true);
                 return true;
@@ -50,6 +66,7 @@ public class ManualPlayer : IPlayer {
         }
         return false;
     }
+
 
     public override bool Action()
     {

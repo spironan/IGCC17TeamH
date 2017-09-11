@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class BattleManager {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+    public void BattleEntry(IPlayer challenger, IPlayer defender)
+    {
+
+    }
 }
