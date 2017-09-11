@@ -10,12 +10,7 @@ TagManager:
   - HelpCanvas
   - StartBtn
   - MainMenuCanvas
-  - Warrior
-  - Archer
-  - Magician
-  - Warrior2
-  - Archer2
-  - Magician2
+  - SoundSystem
   layers:
   - Default
   - TransparentFX
