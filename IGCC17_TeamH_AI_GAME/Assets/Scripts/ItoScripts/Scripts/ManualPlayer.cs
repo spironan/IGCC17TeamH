@@ -37,7 +37,7 @@ public class ManualPlayer : IPlayer {
                     if (GetPlayerID() == 1 && tile.X() != boardCon.GetWidth() - 1) return false;
                     if (GetPlayerID() == 2 && tile.X() != 0) return false;
                     character.transform.position = tile.transform.position;
-                    _charaController.GetCharacters().Add(character);
+                    _charaController.SetCharacterOnBoard(character);
                     if (GetPlayerID() == 1)
                         tile = boardCon.SlideMove(tile.X(), tile.Y(), -1, 0);
                     else
@@ -56,6 +56,7 @@ public class ManualPlayer : IPlayer {
                         tile = boardCon.SlideMove(character.X(), character.Y(), 0, -1);
                     else
                         return false;
+
                 }
 
                 StartCoroutine(character.ConstantMove(tile.transform.position, 10));
@@ -83,4 +84,5 @@ public class ManualPlayer : IPlayer {
 
     }
     
+
 }

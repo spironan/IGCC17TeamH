@@ -16,6 +16,8 @@ public class CharController : MonoBehaviour {
     GameObject _magicianPrefab;
 
     IPlayer _owner;
+
+    bool _isPlaying;
     
     // Use this for initialization
     void Start () {
@@ -57,6 +59,7 @@ public class CharController : MonoBehaviour {
 
     public void Generation(int type)
     {
+        if (!_isPlaying) return;
         if(_currentChara && _currentChara.X() == -1)
         {
             Destroy(_currentChara.gameObject);
@@ -138,5 +141,14 @@ public class CharController : MonoBehaviour {
                 ++greenCount;
         }
         return greenCount;
+    }
+
+    public bool IsPlaying()
+    {
+        return _isPlaying;
+    }
+    public void IsPlaying(bool nowPlay)
+    {
+        _isPlaying = nowPlay;
     }
 }
