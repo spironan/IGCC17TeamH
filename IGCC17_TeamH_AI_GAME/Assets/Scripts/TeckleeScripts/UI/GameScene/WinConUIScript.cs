@@ -27,7 +27,7 @@ public class WinConUIScript : MonoBehaviour {
             for (int i = 0; i < greenCounter; ++i)
             {
                 if (!images[i].gameObject.activeSelf)
-                    if (images[0].gameObject.name != name)
+                    if (images[i].gameObject.name != name)
                         images[i].gameObject.SetActive(true);
             }
         }

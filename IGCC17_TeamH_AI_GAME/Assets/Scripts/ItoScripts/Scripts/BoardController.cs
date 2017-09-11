@@ -30,7 +30,9 @@ public class BoardController : MonoBehaviour {
                 _tileTable[i, j].SetPosition(j, i);
             }
         }
-	}
+        _tileTable[1, 1].OnPiece(true);
+        _tileTable[3, 3].OnPiece(true);
+    }
 
     public Tile GetTile(int h, int w)
     {
@@ -79,5 +81,32 @@ public class BoardController : MonoBehaviour {
         x -= vecX;
         y -= vecY;
         return GetTile(y, x);
+    }
+
+    public void TileColorChange(IPlayer player)
+    {
+        ICharacter character = player.GetCharController().GetCurrentCharacter();
+        for(int i = 0;i < _height;i++)
+        {
+            for(int j = 0;j < _width;j++)
+            {
+
+            }
+        }
+        if(character.X() == -1)
+        {
+            if(player.GetPlayerID() == 1)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+
+        }
     }
 }

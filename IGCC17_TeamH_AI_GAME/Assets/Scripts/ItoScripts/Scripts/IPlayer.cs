@@ -55,4 +55,9 @@ public class IPlayer : MonoBehaviour {
     {
         return _playerID;
     }
+
+    public CharController GetCharController()
+    {
+        return _charaController;
+    }
 }
