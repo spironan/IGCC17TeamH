@@ -7,12 +7,12 @@ public class CharController : MonoBehaviour {
     List<ICharacter> _characters = new List<ICharacter>();
     ICharacter _currentChara;
 
-    int _possessionArcher;
     int _possessionFighter;
+    int _possessionArcher;
     int _possessionMagician;
 
-    GameObject _archerPrefab;
     GameObject _fighterPrefab;
+    GameObject _archerPrefab;
     GameObject _magicianPrefab;
 
     IPlayer _owner;
@@ -21,13 +21,13 @@ public class CharController : MonoBehaviour {
     
     // Use this for initialization
     void Start () {
-        _possessionArcher = 2;
         _possessionFighter = 2;
+        _possessionArcher = 2;
         _possessionMagician = 2;
         _currentChara = null;
 
-        _archerPrefab = Resources.Load("Prefab/Archer") as GameObject;
         _fighterPrefab = Resources.Load("Prefab/Fighter") as GameObject;
+        _archerPrefab = Resources.Load("Prefab/Archer") as GameObject;
         _magicianPrefab = Resources.Load("Prefab/Magician") as GameObject;
     }
 	
@@ -66,20 +66,25 @@ public class CharController : MonoBehaviour {
         }
         switch (type)
         {
-            case 0: //ICharacter.TYPE.ARCHER:
-                if (_possessionArcher <= 0)
-                    return;
-                _currentChara = Instantiate(_archerPrefab).GetComponent<ICharacter>();
+            case 0: //ICharacter.TYPE.FIGHTER:
+                {
+                    if (_possessionFighter <= 0) return;
+                    _currentChara = Instantiate(_fighterPrefab).GetComponent<ICharacter>();
+                }
                 break;
-            case 1: //ICharacter.TYPE.FIGHTER:
-                if (_possessionFighter <= 0)
-                    return;
-                _currentChara = Instantiate(_fighterPrefab).GetComponent<ICharacter>();
+            case 1: //ICharacter.TYPE.ARCHER:
+                {
+                    if (_possessionArcher <= 0) return;
+                    _currentChara = Instantiate(_archerPrefab).GetComponent<ICharacter>();
+                }
                 break;
             case 2: //ICharacter.TYPE.MAGICIAN:
-                if (_possessionMagician <= 0)
-                    return;
-                _currentChara = Instantiate(_magicianPrefab).GetComponent<ICharacter>();
+                {
+                    if (_possessionMagician <= 0) return;
+                    _currentChara = Instantiate(_magicianPrefab).GetComponent<ICharacter>();
+                }
+                break;
+            default:
                 break;
         }
 
@@ -96,16 +101,17 @@ public class CharController : MonoBehaviour {
     {
         switch (character._myType)
         {
-            case ICharacter.TYPE.ARCHER:
-                _possessionArcher--;
-                break;
             case ICharacter.TYPE.FIGHTER:
                 _possessionFighter--;
+                break;
+            case ICharacter.TYPE.ARCHER:
+                _possessionArcher--;
                 break;
             case ICharacter.TYPE.MAGICIAN:
                 _possessionMagician--;
                 break;
-
+            default:
+                break;
         }
         character.SetOnBoard(true);
         _characters.Add(character);
@@ -121,10 +127,10 @@ public class CharController : MonoBehaviour {
     {
         switch (type)
         {
-            case ICharacter.TYPE.ARCHER:
-                return _possessionArcher;
             case ICharacter.TYPE.FIGHTER:
                 return _possessionFighter;
+            case ICharacter.TYPE.ARCHER:
+                return _possessionArcher;
             case ICharacter.TYPE.MAGICIAN:
                 return _possessionMagician;
             default:
