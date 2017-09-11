@@ -66,26 +66,17 @@ public class CharController : MonoBehaviour {
             case 0: //ICharacter.TYPE.ARCHER:
                 if (_possessionArcher <= 0)
                     return;
-                {
-                    _currentChara = Instantiate(_archerPrefab).GetComponent<ICharacter>();
-                    _possessionArcher--;
-                }
+                _currentChara = Instantiate(_archerPrefab).GetComponent<ICharacter>();
                 break;
             case 1: //ICharacter.TYPE.FIGHTER:
                 if (_possessionFighter <= 0)
                     return;
-                {
-                    _currentChara = Instantiate(_fighterPrefab).GetComponent<ICharacter>();
-                    _possessionFighter--;
-                }
+                _currentChara = Instantiate(_fighterPrefab).GetComponent<ICharacter>();
                 break;
             case 2: //ICharacter.TYPE.MAGICIAN:
                 if (_possessionMagician <= 0)
                     return;
-                {
-                    _currentChara = Instantiate(_magicianPrefab).GetComponent<ICharacter>();
-                    _possessionMagician--;
-                }
+                _currentChara = Instantiate(_magicianPrefab).GetComponent<ICharacter>();
                 break;
         }
 
@@ -96,6 +87,26 @@ public class CharController : MonoBehaviour {
             _currentChara.transform.position = new Vector3(-3, 0, 0);
             _currentChara.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
         }
+    }
+
+    public ICharacter SetCharacterOnBoard(ICharacter character)
+    {
+        switch (character._myType)
+        {
+            case ICharacter.TYPE.ARCHER:
+                _possessionArcher--;
+                break;
+            case ICharacter.TYPE.FIGHTER:
+                _possessionFighter--;
+                break;
+            case ICharacter.TYPE.MAGICIAN:
+                _possessionMagician--;
+                break;
+
+        }
+        character.SetOnBoard(true);
+        _characters.Add(character);
+        return character;
     }
 
     public List<ICharacter> GetCharacters()
