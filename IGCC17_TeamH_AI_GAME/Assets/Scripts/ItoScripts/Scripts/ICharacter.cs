@@ -6,8 +6,8 @@ public class ICharacter : MonoBehaviour {
 
     public enum TYPE
     {
-        ARCHER,
         FIGHTER,
+        ARCHER,
         MAGICIAN
     }
 
@@ -23,6 +23,8 @@ public class ICharacter : MonoBehaviour {
     int _moveRange, _attackRange;
     int _x, _y;
     bool _onMouse, _onBoard;
+    SpriteRenderer _renderer;
+    BoxCollider _collider;
 
     private void Start()
     {
@@ -39,11 +41,13 @@ public class ICharacter : MonoBehaviour {
         //    default:
         //        break;
         //}
-        _myType = TYPE.ARCHER;
+        //_myType = TYPE.ARCHER;
         _moveRange = 1;
         _attackRange = 1;
         SetPosition(-1, -1);
         _onMouse = _onBoard = false;
+        _renderer = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<BoxCollider>();
     }
 
     public TYPE GetMyType()
@@ -104,6 +108,21 @@ public class ICharacter : MonoBehaviour {
     public void SetOnBoard(bool onBoard)
     {
         _onBoard = onBoard;
+    }
+
+    public void Defeated()
+    {
+        if (_state == STATE.GREEN) return;
+        _state = STATE.FROZEN;
+        _renderer.color = new Color(0.3f, 0.3f, 0.3f, 1);
+        _collider.enabled = false;
+    }
+
+    public void Victory()
+    {
+        _state = STATE.GREEN;
+        _renderer.color = new Color(0, 1, 0, 1);
+        _collider.enabled = false;
     }
 
     public IEnumerator ConstantMove(Vector3 goal, int flame)

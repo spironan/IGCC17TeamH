@@ -32,7 +32,9 @@ public class GameManager : MonoBehaviour {
         _player1.Initialize(1);
         _player2.Initialize(2);
         _currentPlayer = _player1;
-	}
+
+        _currentPlayer.GetCharController().IsPlaying(true);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -65,6 +67,8 @@ public class GameManager : MonoBehaviour {
 
     private void Action()
     {
+        IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
+        BattleManager.Instance.Battle(_currentPlayer, defender);
         _gameCondition = GAME_CONDITION.BATTLE;
     }
 
@@ -79,5 +83,11 @@ public class GameManager : MonoBehaviour {
     private void EndProcess()
     {
         _gameCondition = GAME_CONDITION.SELECT;
+        _player1.GetCharController().SetCurrentCharacter(null);
+        _player2.GetCharController().SetCurrentCharacter(null);
+
+        _player1.GetCharController().IsPlaying(false);
+        _player2.GetCharController().IsPlaying(false);
+        _currentPlayer.GetCharController().IsPlaying(true);
     }
 }

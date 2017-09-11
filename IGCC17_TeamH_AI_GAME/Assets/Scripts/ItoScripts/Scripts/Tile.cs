@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour {
-
+    
     bool _onPiece;
     bool _onMouse;
     int _x, _y;
     SpriteRenderer _spriteRenderer;
 
-	void Start () {
+	void Awake () {
         _onPiece = false;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         SetColor(new Color(1, 1, 1, 0.4f));
