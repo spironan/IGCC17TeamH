@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     enum GAME_CONDITION
     {
@@ -23,9 +24,10 @@ public class GameManager : MonoBehaviour {
     IPlayer _player1;
     IPlayer _player2;
     IPlayer _currentPlayer;
-    
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start()
+    {
         _gameCondition = GAME_CONDITION.SELECT;
         _player1 = _player1Object.AddComponent<ManualPlayer>();
         _player2 = _player2Object.AddComponent<ManualPlayer>();
@@ -35,9 +37,10 @@ public class GameManager : MonoBehaviour {
 
         _currentPlayer.GetCharController().IsPlaying(true);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         switch (_gameCondition)
         {
             case GAME_CONDITION.SELECT:
@@ -55,8 +58,8 @@ public class GameManager : MonoBehaviour {
             default:
                 break;
         }
-	}
-    
+    }
+
     private void SelectCharacter()
     {
         _boardController.TileColorChange(_currentPlayer);
@@ -68,16 +71,23 @@ public class GameManager : MonoBehaviour {
 
     private void Action()
     {
-        IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
-        BattleManager.Instance.Battle(_currentPlayer, defender);
-        _gameCondition = GAME_CONDITION.BATTLE;
+        ICharacter character = _currentPlayer.GetCharController().GetCurrentCharacter();
+        if (character.GetCondition() == ICharacter.CONDITION.END)
+        {
+            character.ChangeCondition(ICharacter.CONDITION.WAIT);
+            _gameCondition = GAME_CONDITION.BATTLE;
+        }
     }
 
     private void Battle()
     {
-        // winner is next turn
-        // if currentPlayer is lose
-        _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+        IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
+        if (BattleManager.Instance.Battle(_currentPlayer, defender))
+        {
+            // winner is next turn
+            // if currentPlayer is lose
+            _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+        }
         _gameCondition = GAME_CONDITION.ENDPROCESS;
     }
 

@@ -30,8 +30,6 @@ public class BoardController : MonoBehaviour {
                 _tileTable[i, j].SetPosition(j, i);
             }
         }
-        //_tileTable[1, 1].OnPiece(true);
-        //_tileTable[3, 3].OnPiece(true);
     }
 
     public Tile GetTile(int h, int w)
