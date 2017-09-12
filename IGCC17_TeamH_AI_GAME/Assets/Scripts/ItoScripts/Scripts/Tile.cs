@@ -51,13 +51,11 @@ public class Tile : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        SetColor(new Color(1, 1, 0, 0.4f));
         _onMouse = true;
     }
 
     private void OnMouseExit()
     {
-        SetColor(new Color(1, 1, 1, 0.4f));
         _onMouse = false;
     }
 }

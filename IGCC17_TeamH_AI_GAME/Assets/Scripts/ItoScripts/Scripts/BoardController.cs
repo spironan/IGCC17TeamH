@@ -30,8 +30,6 @@ public class BoardController : MonoBehaviour {
                 _tileTable[i, j].SetPosition(j, i);
             }
         }
-        //_tileTable[1, 1].OnPiece(true);
-        //_tileTable[3, 3].OnPiece(true);
     }
 
     public Tile GetTile(int h, int w)
@@ -94,7 +92,7 @@ public class BoardController : MonoBehaviour {
                 if (character)
                     _tileTable[i, j].SetColor(new Color(0.5f, 0.2f, 0.1f, 0.5f));
                 else
-                    _tileTable[i, j].SetColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
+                    _tileTable[i, j].SetColor(new Color(0.5f, 0.5f, 0.5f, 0.0f));
 
                 if (_tileTable[i, j].OnMouse())
                 {

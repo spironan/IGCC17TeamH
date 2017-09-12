@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     enum GAME_CONDITION
     {
         SELECT,
         ACTION,
         BATTLE,
-        ENDPROCESS
+        ENDPROCESS,
+        RESULT
     }
 
     [SerializeField]
@@ -23,9 +25,12 @@ public class GameManager : MonoBehaviour {
     IPlayer _player1;
     IPlayer _player2;
     IPlayer _currentPlayer;
-    
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    int _turnCount;
+
+    // Use this for initialization
+    void Start()
+    {
         _gameCondition = GAME_CONDITION.SELECT;
         _player1 = _player1Object.AddComponent<ManualPlayer>();
         _player2 = _player2Object.AddComponent<AI>();
@@ -34,10 +39,24 @@ public class GameManager : MonoBehaviour {
         _currentPlayer = _player1;
 
         _currentPlayer.GetCharController().IsPlaying(true);
+
+        GameObject obstaclePrefab = Resources.Load("Prefab/Obstacle") as GameObject;
+        Tile tile = _boardController.GetTile(1, 1);
+        tile.OnPiece(true);
+        Instantiate(obstaclePrefab, tile.transform.position, new Quaternion(0, 0, 0, 0));
+        tile = _boardController.GetTile(3, 3);
+        tile.OnPiece(true);
+        Instantiate(obstaclePrefab, tile.transform.position, new Quaternion(0, 0, 0, 0));
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (_turnCount <= 0)
+        {
+            _gameCondition = GAME_CONDITION.RESULT;
+        }
+
         switch (_gameCondition)
         {
             case GAME_CONDITION.SELECT:
@@ -52,11 +71,14 @@ public class GameManager : MonoBehaviour {
             case GAME_CONDITION.ENDPROCESS:
                 EndProcess();
                 break;
+            case GAME_CONDITION.RESULT:
+                Result();
+                break;
             default:
                 break;
         }
-	}
-    
+    }
+
     private void SelectCharacter()
     {
         _boardController.TileColorChange(_currentPlayer);
@@ -68,16 +90,23 @@ public class GameManager : MonoBehaviour {
 
     private void Action()
     {
-        IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
-        BattleManager.Instance.Battle(_currentPlayer, defender);
-        _gameCondition = GAME_CONDITION.BATTLE;
+        ICharacter character = _currentPlayer.GetCharController().GetCurrentCharacter();
+        if (character.GetCondition() == ICharacter.CONDITION.END)
+        {
+            character.ChangeCondition(ICharacter.CONDITION.WAIT);
+            _gameCondition = GAME_CONDITION.BATTLE;
+        }
     }
 
     private void Battle()
     {
-        // winner is next turn
-        // if currentPlayer is lose
-        _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+        IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
+        if (BattleManager.Instance.Battle(_currentPlayer, defender))
+        {
+            // winner is next turn
+            // if currentPlayer is lose
+            _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+        }
         _gameCondition = GAME_CONDITION.ENDPROCESS;
     }
 
@@ -90,5 +119,17 @@ public class GameManager : MonoBehaviour {
         _player1.GetCharController().IsPlaying(false);
         _player2.GetCharController().IsPlaying(false);
         _currentPlayer.GetCharController().IsPlaying(true);
+
+        _turnCount--;
+    }
+
+    private void Result()
+    {
+        // result screen create
+    }
+
+    public int GetTurnNumber()
+    {
+        return _turnCount;
     }
 }

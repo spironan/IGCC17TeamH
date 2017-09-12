@@ -7,18 +7,31 @@ public class CharCountUIScript : MonoBehaviour {
 
     public CharController controller;
     public ICharacter.TYPE type;
-    Text counter;
-    string originalText;
+    Image counter;
+    Sprite zero, one, two;
 
 	// Use this for initialization
 	void Start () {
-        counter = GetComponent<Text>();
-        originalText = counter.text;
+        zero = Resources.Load<Sprite>("Assets/GameUI/0");
+        one = Resources.Load<Sprite>("Assets/GameUI/1");
+        two = Resources.Load<Sprite>("Assets/GameUI/2");
+        counter = GetComponent<Image>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        counter.text = originalText + controller.GetPossessionCount(type);
+        switch (controller.GetPossessionCount(type))
+        {
+            case 0:
+                counter.sprite = zero;
+                break;
+            case 1:
+                counter.sprite = one;
+                break;
+            case 2:
+                counter.sprite = two;
+                break;
+        }
     }
 
 }

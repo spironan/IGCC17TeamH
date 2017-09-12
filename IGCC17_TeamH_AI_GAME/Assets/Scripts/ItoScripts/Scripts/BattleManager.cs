@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleManager {
+public class BattleManager
+{
 
     enum Compatibility
     {
@@ -12,12 +13,12 @@ public class BattleManager {
     };
 
     static BattleManager _instance;
-    
+
     public static BattleManager Instance
     {
         get
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 _instance = new BattleManager();
             }
@@ -31,7 +32,12 @@ public class BattleManager {
     }
 
 
-
+    /// <summary>
+    /// won returned true
+    /// </summary>
+    /// <param name="challenger"></param>
+    /// <param name="defender"></param>
+    /// <returns></returns>
     public bool Battle(IPlayer challenger, IPlayer defender)
     {
         // 攻撃側の周囲を探索
@@ -46,13 +52,14 @@ public class BattleManager {
             if (challengerChara.GetMyType() == def.GetMyType()) continue;
             if (CheckCompatibility(challengerChara.GetMyType(), def.GetMyType()) == Compatibility.Strong)
             {
-                challengerChara.Victory();
-                def.Defeated();
+                challenger.GetCharController().CharaVictory(challengerChara);
+                challenger.GetCharController().CharaLose(def);
             }
             else
             {
-                def.Victory();
-                challengerChara.Defeated();
+                if (def.GetMyState() == ICharacter.STATE.GREEN) continue;
+                challenger.GetCharController().CharaVictory(def);
+                challenger.GetCharController().CharaLose(challengerChara);
             }
         }
         return true;
