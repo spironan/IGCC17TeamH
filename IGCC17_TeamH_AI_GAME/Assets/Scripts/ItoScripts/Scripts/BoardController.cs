@@ -86,27 +86,54 @@ public class BoardController : MonoBehaviour {
     public void TileColorChange(IPlayer player)
     {
         ICharacter character = player.GetCharController().GetCurrentCharacter();
-        for(int i = 0;i < _height;i++)
+        Tile onMouseTile = null;
+        for (int i = 0; i < _height; i++)
         {
-            for(int j = 0;j < _width;j++)
+            for (int j = 0; j < _width; j++)
             {
+                if (character)
+                    _tileTable[i, j].SetColor(new Color(0.5f, 0.2f, 0.1f, 0.5f));
+                else
+                    _tileTable[i, j].SetColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
 
+                if (_tileTable[i, j].OnMouse())
+                {
+                    onMouseTile = _tileTable[i, j];
+                }
             }
         }
-        if(character.X() == -1)
-        {
-            if(player.GetPlayerID() == 1)
-            {
 
+        if (character && character.X() == -1)
+        {
+            if (player.GetPlayerID() == 1)
+            {
+                for (int i = 0; i < _height; i++)
+                {
+                    _tileTable[i, _width - 1].SetColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
+                }
             }
             else
             {
-
+                for (int i = 0; i < _height; i++)
+                {
+                    _tileTable[i, 0].SetColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
+                }
             }
         }
-        else
+        else if (character)
         {
-
+            Tile tile = GetTile(character.Y(), character.X() + 1);
+            if (tile && !tile.OnPiece()) tile.SetColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
+            tile = GetTile(character.Y(), character.X() - 1);
+            if (tile && !tile.OnPiece()) tile.SetColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
+            tile = GetTile(character.Y() + 1, character.X());
+            if (tile && !tile.OnPiece()) tile.SetColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
+            tile = GetTile(character.Y() - 1, character.X());
+            if (tile && !tile.OnPiece()) tile.SetColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
+        }
+        if (onMouseTile)
+        {
+            onMouseTile.SetColor(new Color(1, 1, 0, 0.5f));
         }
     }
 }

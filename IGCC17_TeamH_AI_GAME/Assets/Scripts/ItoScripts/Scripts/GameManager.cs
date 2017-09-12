@@ -59,7 +59,8 @@ public class GameManager : MonoBehaviour {
     
     private void SelectCharacter()
     {
-        if(_currentPlayer.SelectCharacter(_boardController))
+        _boardController.TileColorChange(_currentPlayer);
+        if (_currentPlayer.SelectCharacter(_boardController))
         {
             _gameCondition = GAME_CONDITION.ACTION;
         }
