@@ -126,14 +126,14 @@ public class ICharacter : MonoBehaviour {
     {
         if (_state == STATE.GREEN) return;
         _state = STATE.FROZEN;
-        _renderer.color = new Color(0.3f, 0.3f, 0.3f, 1);
+        //_renderer.color = new Color(0.3f, 0.3f, 0.3f, 1);
         _collider.enabled = false;
     }
 
     public void Victory()
     {
         _state = STATE.GREEN;
-        _renderer.color = new Color(0, 1, 0, 1);
+        //_renderer.color = new Color(0, 1, 0, 1);
         _collider.enabled = true; // should this be true
     }
 

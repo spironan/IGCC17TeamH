@@ -15,6 +15,12 @@ public class CharController : MonoBehaviour {
     GameObject _archerPrefab;
     GameObject _magicianPrefab;
 
+    Sprite _wonFighterSprite;
+    Sprite _wonArcherSprite;
+    Sprite _wonMagicianSprite;
+
+    Sprite _blockSprite;
+
     IPlayer _owner;
 
     bool _isPlaying;
@@ -24,16 +30,39 @@ public class CharController : MonoBehaviour {
         _possessionFighter = 2;
         _possessionArcher = 2;
         _possessionMagician = 2;
+        //_fighterPrefab = _archerPrefab = _magicianPrefab = _wonFighterPrefab = _wonArcherPrefab = _wonMagicianPrefab = null;
         _currentChara = null;
 
-        _fighterPrefab = Resources.Load("Prefab/Fighter") as GameObject;
-        _archerPrefab = Resources.Load("Prefab/Archer") as GameObject;
-        _magicianPrefab = Resources.Load("Prefab/Magician") as GameObject;
+        _blockSprite = Resources.Load<Sprite>("Assets/block");
     }
 	
     public void SetOwner(IPlayer owner)
     {
         _owner = owner;
+        if (owner.GetPlayerID() == 1)
+        {
+            _fighterPrefab = Resources.Load("Prefab/Blue_Fighter") as GameObject;
+            _archerPrefab = Resources.Load("Prefab/Blue_Archer") as GameObject;
+            _magicianPrefab = Resources.Load("Prefab/Blue_Magician") as GameObject;
+
+            _wonFighterSprite = Resources.Load<Sprite>("Assets/GameBlocks/Blue01");
+            _wonArcherSprite = Resources.Load<Sprite>("Assets/GameBlocks/Blue03");
+            _wonMagicianSprite = Resources.Load<Sprite>("Assets/GameBlocks/Blue02");
+
+            Debug.Log("Set Prefabs For Player!");
+        }
+        else if (owner.GetPlayerID() == 2)
+        {
+            _fighterPrefab = Resources.Load("Prefab/Red_Fighter") as GameObject;
+            _archerPrefab = Resources.Load("Prefab/Red_Archer") as GameObject;
+            _magicianPrefab = Resources.Load("Prefab/Red_Magician") as GameObject;
+
+            _wonFighterSprite = Resources.Load<Sprite>("Assets/GameBlocks/Red01");
+            _wonArcherSprite = Resources.Load<Sprite>("Assets/GameBlocks/Red03");
+            _wonMagicianSprite = Resources.Load<Sprite>("Assets/GameBlocks/Red02");
+
+            Debug.Log("Set Prefabs For AI!");
+        }
     }
 
     public ICharacter GetCurrentCharacter()
@@ -93,8 +122,9 @@ public class CharController : MonoBehaviour {
         else
         {
             _currentChara.transform.position = new Vector3(-3, 0, 0);
-            _currentChara.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
+            //_currentChara.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
         }
+        
     }
 
     public ICharacter SetCharacterOnBoard(ICharacter character)
@@ -156,5 +186,34 @@ public class CharController : MonoBehaviour {
     public void IsPlaying(bool nowPlay)
     {
         _isPlaying = nowPlay;
+    }
+
+
+    public void CharaVictory(ICharacter character)
+    {
+        character.Victory();
+        switch (character._myType)
+        {
+            case ICharacter.TYPE.FIGHTER:
+                character.SetSprite(_wonFighterSprite);
+                break;
+            case ICharacter.TYPE.ARCHER:
+                character.SetSprite(_wonArcherSprite);
+                break;
+            case ICharacter.TYPE.MAGICIAN:
+                character.SetSprite(_wonMagicianSprite);
+                break;
+            default:
+                break;
+        }
+
+    }
+    public void CharaLose(ICharacter character)
+    {
+        if (character.GetMyState() == ICharacter.STATE.NEUTRAL)
+        {
+            character.Defeated();
+            character.SetSprite(_blockSprite);
+        }
     }
 }
