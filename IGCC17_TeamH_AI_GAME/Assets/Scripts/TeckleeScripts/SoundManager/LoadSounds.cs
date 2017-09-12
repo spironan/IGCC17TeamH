@@ -14,5 +14,32 @@ public class LoadSounds : MonoBehaviour
         //SoundSystem.Instance.PlayClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip(""));
         //AudioClipManager.GetInstance().GenerateAudioClip("filename","filepath");
         //Keep Adding on The same line with the filename and filepath replaced respectively for new sounds
+
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
+        //AudioClipManager.GetInstance().GenerateAudioClip("filename", "filepath");
     }
 }

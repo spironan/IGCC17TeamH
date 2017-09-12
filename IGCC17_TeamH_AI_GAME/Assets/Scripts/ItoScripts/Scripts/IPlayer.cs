@@ -15,8 +15,8 @@ public class IPlayer : MonoBehaviour {
     public void Initialize(int id)
     {
         _charaController = GetComponent<CharController>();
-        _charaController.SetOwner(this);
         _playerID = id;
+        _charaController.SetOwner(this);
         if (id == 1)
         {
             _archerButton = GameObject.Find("Archer").GetComponent<Button>();
