@@ -12,7 +12,7 @@ public class Tile : MonoBehaviour {
 	void Awake () {
         _onPiece = false;
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        SetColor(new Color(1, 1, 1, 0.4f));
+        SetColor(new Color(1, 1, 1, 0.5f));
     }
     
     public void SetColor(Color color)
@@ -51,13 +51,11 @@ public class Tile : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        SetColor(new Color(1, 1, 0, 0.4f));
         _onMouse = true;
     }
 
     private void OnMouseExit()
     {
-        SetColor(new Color(1, 1, 1, 0.4f));
         _onMouse = false;
     }
 }

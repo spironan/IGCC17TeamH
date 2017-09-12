@@ -68,16 +68,23 @@ public class GameManager : MonoBehaviour {
 
     private void Action()
     {
-        IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
-        BattleManager.Instance.Battle(_currentPlayer, defender);
-        _gameCondition = GAME_CONDITION.BATTLE;
+        ICharacter character = _currentPlayer.GetCharController().GetCurrentCharacter();
+        if (character.GetCondition() == ICharacter.CONDITION.END)
+        {
+            character.ChangeCondition(ICharacter.CONDITION.WAIT);
+            _gameCondition = GAME_CONDITION.BATTLE;
+        }
     }
 
     private void Battle()
     {
-        // winner is next turn
-        // if currentPlayer is lose
-        _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+        IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
+        if(BattleManager.Instance.Battle(_currentPlayer, defender))
+        {
+            // winner is next turn
+            // if currentPlayer is lose
+            _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+        }
         _gameCondition = GAME_CONDITION.ENDPROCESS;
     }
 

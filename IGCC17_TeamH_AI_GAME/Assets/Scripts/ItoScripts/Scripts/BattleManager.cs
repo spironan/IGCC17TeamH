@@ -31,7 +31,12 @@ public class BattleManager {
     }
 
 
-
+    /// <summary>
+    /// won returned true
+    /// </summary>
+    /// <param name="challenger"></param>
+    /// <param name="defender"></param>
+    /// <returns></returns>
     public bool Battle(IPlayer challenger, IPlayer defender)
     {
         // 攻撃側の周囲を探索
@@ -51,6 +56,7 @@ public class BattleManager {
             }
             else
             {
+                if (def.GetMyState() == ICharacter.STATE.GREEN) continue;
                 def.Victory();
                 challengerChara.Defeated();
             }
