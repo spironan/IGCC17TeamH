@@ -39,6 +39,14 @@ public class GameManager : MonoBehaviour
         _currentPlayer = _player1;
 
         _currentPlayer.GetCharController().IsPlaying(true);
+
+        GameObject obstaclePrefab = Resources.Load("Prefab/Obstacle") as GameObject;
+        Tile tile = _boardController.GetTile(1, 1);
+        tile.OnPiece(true);
+        Instantiate(obstaclePrefab, tile.transform.position, new Quaternion(0, 0, 0, 0));
+        tile = _boardController.GetTile(3, 3);
+        tile.OnPiece(true);
+        Instantiate(obstaclePrefab, tile.transform.position, new Quaternion(0, 0, 0, 0));
     }
 
     // Update is called once per frame
