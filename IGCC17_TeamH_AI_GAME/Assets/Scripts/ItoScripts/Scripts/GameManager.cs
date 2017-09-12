@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
         SELECT,
         ACTION,
         BATTLE,
-        ENDPROCESS
+        ENDPROCESS,
+        RESULT
     }
 
     [SerializeField]
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
     IPlayer _player1;
     IPlayer _player2;
     IPlayer _currentPlayer;
+    [SerializeField]
+    int _turnCount;
 
     // Use this for initialization
     void Start()
@@ -41,6 +44,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_turnCount <= 0)
+        {
+            _gameCondition = GAME_CONDITION.RESULT;
+        }
+
         switch (_gameCondition)
         {
             case GAME_CONDITION.SELECT:
@@ -54,6 +62,9 @@ public class GameManager : MonoBehaviour
                 break;
             case GAME_CONDITION.ENDPROCESS:
                 EndProcess();
+                break;
+            case GAME_CONDITION.RESULT:
+                Result();
                 break;
             default:
                 break;
@@ -100,5 +111,17 @@ public class GameManager : MonoBehaviour
         _player1.GetCharController().IsPlaying(false);
         _player2.GetCharController().IsPlaying(false);
         _currentPlayer.GetCharController().IsPlaying(true);
+
+        _turnCount--;
+    }
+
+    private void Result()
+    {
+        // result screen create
+    }
+
+    public int GetTurnNumber()
+    {
+        return _turnCount;
     }
 }
