@@ -114,6 +114,10 @@ public class ICharacter : MonoBehaviour {
 
     public IEnumerator ConstantMove(Vector3 goal, int flame)
     {
+        if (_x == -1)
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
         Vector3 vel = (goal - transform.position) / flame;
         for (int i = 0; i < flame; i++)
         {
