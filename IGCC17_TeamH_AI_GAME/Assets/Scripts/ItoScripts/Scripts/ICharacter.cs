@@ -18,7 +18,7 @@ public class ICharacter : MonoBehaviour {
         FROZEN,
     };
     
-    public TYPE _myType = TYPE.ARCHER;
+    public TYPE _myType = TYPE.FIGHTER;
     STATE _state = STATE.NEUTRAL;
     int _moveRange, _attackRange;
     int _x, _y;
@@ -30,21 +30,8 @@ public class ICharacter : MonoBehaviour {
     {
         // Temporary placement
         // 仮置き
-        //switch (_myType)
-        //{
-        //    case TYPE.ARCHER:
-        //        break;
-        //    case TYPE.FIGHTER:
-        //        break;
-        //    case TYPE.MAGICIAN:
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //_myType = TYPE.ARCHER;
-        _moveRange = 1;
-        _attackRange = 1;
         SetPosition(-1, -1);
+        _moveRange = _attackRange = 1;
         _onMouse = _onBoard = false;
         _renderer = GetComponent<SpriteRenderer>();
         _collider = GetComponent<BoxCollider>();
@@ -122,11 +109,15 @@ public class ICharacter : MonoBehaviour {
     {
         _state = STATE.GREEN;
         _renderer.color = new Color(0, 1, 0, 1);
-        _collider.enabled = false;
+        _collider.enabled = false; // should this be true
     }
 
     public IEnumerator ConstantMove(Vector3 goal, int flame)
     {
+        if (_x == -1)
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
         Vector3 vel = (goal - transform.position) / flame;
         for (int i = 0; i < flame; i++)
         {
