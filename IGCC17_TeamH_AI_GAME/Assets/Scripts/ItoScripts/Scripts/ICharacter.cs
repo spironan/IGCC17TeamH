@@ -147,10 +147,10 @@ public class ICharacter : MonoBehaviour {
         {
             yield return new WaitForSeconds(1.0f);
         }
-        Vector3 vel = (goal - transform.position) / flame;
+        Vector3 vel = (goal - transform.position) / flame;      //
         for (int i = 0; i < flame; i++)
         {
-            transform.position += vel;
+            transform.position += vel;      //
             yield return null;
         }
         _condition = CONDITION.END;

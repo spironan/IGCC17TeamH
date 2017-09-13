@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     {
         _gameCondition = GAME_CONDITION.SELECT;
         _player1 = _player1Object.AddComponent<ManualPlayer>();
-        _player2 = _player2Object.AddComponent<ManualPlayer>();
+        _player2 = _player2Object.AddComponent<AI>();
         _player1.Initialize(1);
         _player2.Initialize(2);
         _currentPlayer = _player1;
