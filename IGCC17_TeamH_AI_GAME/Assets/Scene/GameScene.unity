@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ca43b949a04b54389e2ca306affffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: {x: 0, y: 0, z: 0.8}
+  rotateSpeed: {x: 0, y: 0, z: 0}
 --- !u!1 &354098213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,7 +1115,7 @@ RectTransform:
   - {fileID: 588602911}
   - {fileID: 1135939989}
   m_Father: {fileID: 786157530}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1548,7 +1548,7 @@ RectTransform:
   - {fileID: 1936779163}
   - {fileID: 907769222}
   m_Father: {fileID: 786157530}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -1823,7 +1823,7 @@ RectTransform:
   - {fileID: 35063332}
   - {fileID: 1469722095}
   m_Father: {fileID: 786157530}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2804,8 +2804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633699fe8c4eb5140b2afa693a94cb8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  target: {x: 0, y: 30, z: 0}
+  speed: 0
+  target: {x: 0, y: 0, z: 0}
 --- !u!1 &1262286010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,7 +2839,7 @@ RectTransform:
   - {fileID: 893634408}
   - {fileID: 393973117}
   m_Father: {fileID: 786157530}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3265,7 +3265,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 786157530}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
