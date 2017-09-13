@@ -35,7 +35,7 @@ public class GameEndDisplayScript : MonoBehaviour {
                 if (controller.GetGreenCount() != 3)
                     continue;
 
-                if (controller.GetInstanceID() == 1)
+                if (controller.GetOwner().GetPlayerID() == 1)
                     win = true;
                 else
                     lose = true;

@@ -137,6 +137,7 @@ public class ICharacter : MonoBehaviour {
         //_renderer.color = new Color(0, 1, 0, 1);
         _collider.enabled = true; // should this be true
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        GetComponent<Animator>().enabled = false;
     }
 
     public IEnumerator ConstantMove(Vector3 goal, int flame)
@@ -146,10 +147,10 @@ public class ICharacter : MonoBehaviour {
         {
             yield return new WaitForSeconds(1.0f);
         }
-        Vector3 vel = (goal - transform.position) / flame;
+        Vector3 vel = (goal - transform.position) / flame;      //
         for (int i = 0; i < flame; i++)
         {
-            transform.position += vel;
+            transform.position += vel;      //
             yield return null;
         }
         _condition = CONDITION.END;

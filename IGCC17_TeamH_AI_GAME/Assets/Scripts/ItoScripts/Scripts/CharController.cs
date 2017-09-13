@@ -35,7 +35,11 @@ public class CharController : MonoBehaviour {
 
         _blockSprite = Resources.Load<Sprite>("Assets/GameBlocks/block");
     }
-	
+
+    public IPlayer GetOwner()
+    {
+        return _owner;
+    }
     public void SetOwner(IPlayer owner)
     {
         _owner = owner;
@@ -124,7 +128,6 @@ public class CharController : MonoBehaviour {
             _currentChara.transform.position = new Vector3(-3, 0, 0);
             //_currentChara.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
         }
-        
     }
 
     public ICharacter SetCharacterOnBoard(ICharacter character)

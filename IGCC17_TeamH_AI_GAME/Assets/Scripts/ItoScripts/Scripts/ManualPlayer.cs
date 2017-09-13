@@ -4,30 +4,17 @@ using UnityEngine;
 
 public class ManualPlayer : IPlayer
 {
-
-    GameObject _operationUI;
     GameObject _summonEffect;
 
     private void Start()
     {
         _charaController = gameObject.GetComponent<CharController>();
-        _operationUI = GameObject.Find("OperationUI");
         _summonEffect = Resources.Load("Prefab/SummonEffect") as GameObject;
     }
 
     public override bool SelectCharacter(BoardController boardCon)
     {
         ICharacter character = _charaController.GetCurrentCharacter();
-        // track ui
-        if (character)
-        {
-            _operationUI.SetActive(true);
-            _operationUI.GetComponent<RectTransform>().position = RectTransformUtility.WorldToScreenPoint(Camera.main, character.transform.position);
-        }
-        else
-        {
-            _operationUI.SetActive(false);
-        }
         // wait for button
         if (!Input.GetMouseButtonDown(0)) return false;
         // have character is delete
