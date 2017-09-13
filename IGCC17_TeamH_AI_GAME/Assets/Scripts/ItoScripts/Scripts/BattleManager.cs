@@ -52,13 +52,14 @@ public class BattleManager
             if (challengerChara.GetMyType() == def.GetMyType()) continue;
             if (CheckCompatibility(challengerChara.GetMyType(), def.GetMyType()) == Compatibility.Strong)
             {
+                if (challengerChara.GetMyState() == ICharacter.STATE.GREEN) continue;
                 challenger.GetCharController().CharaVictory(challengerChara);
-                challenger.GetCharController().CharaLose(def);
+                defender.GetCharController().CharaLose(def);
             }
             else
             {
                 if (def.GetMyState() == ICharacter.STATE.GREEN) continue;
-                challenger.GetCharController().CharaVictory(def);
+                defender.GetCharController().CharaVictory(def);
                 challenger.GetCharController().CharaLose(challengerChara);
             }
         }

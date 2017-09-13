@@ -126,6 +126,10 @@ public class GameManager : MonoBehaviour
     private void Result()
     {
         // result screen create
+        _player1.GetCharController().SetCurrentCharacter(null);
+        _player2.GetCharController().SetCurrentCharacter(null);
+        _player1.GetCharController().IsPlaying(false);
+        _player2.GetCharController().IsPlaying(false);
     }
 
     public int GetTurnNumber()
