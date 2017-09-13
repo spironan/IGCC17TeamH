@@ -128,6 +128,7 @@ public class ICharacter : MonoBehaviour {
         _state = STATE.FROZEN;
         //_renderer.color = new Color(0.3f, 0.3f, 0.3f, 1);
         _collider.enabled = false;
+        transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
     public void Victory()
@@ -135,6 +136,7 @@ public class ICharacter : MonoBehaviour {
         _state = STATE.GREEN;
         //_renderer.color = new Color(0, 1, 0, 1);
         _collider.enabled = true; // should this be true
+        transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
     public IEnumerator ConstantMove(Vector3 goal, int flame)

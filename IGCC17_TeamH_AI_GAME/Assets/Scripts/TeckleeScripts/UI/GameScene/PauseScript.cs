@@ -29,4 +29,9 @@ public class PauseScript : MonoBehaviour {
     {
         SceneManager.LoadScene("MainMenuScene");   
     }
+
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
 }

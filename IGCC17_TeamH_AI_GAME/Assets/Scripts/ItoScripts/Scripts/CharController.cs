@@ -30,10 +30,10 @@ public class CharController : MonoBehaviour {
         _possessionFighter = 2;
         _possessionArcher = 2;
         _possessionMagician = 2;
-        //_fighterPrefab = _archerPrefab = _magicianPrefab = _wonFighterPrefab = _wonArcherPrefab = _wonMagicianPrefab = null;
+
         _currentChara = null;
 
-        _blockSprite = Resources.Load<Sprite>("Assets/block");
+        _blockSprite = Resources.Load<Sprite>("Assets/GameBlocks/block");
     }
 	
     public void SetOwner(IPlayer owner)
@@ -118,10 +118,10 @@ public class CharController : MonoBehaviour {
         }
 
         if (_owner.GetPlayerID() == 1)
-            _currentChara.transform.position = new Vector3(4, 0, 0);
+            _currentChara.transform.position = new Vector3(3, 0, 0);
         else
         {
-            _currentChara.transform.position = new Vector3(-4, 0, 0);
+            _currentChara.transform.position = new Vector3(-3, 0, 0);
             //_currentChara.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
         }
         
@@ -206,7 +206,6 @@ public class CharController : MonoBehaviour {
             default:
                 break;
         }
-
     }
     public void CharaLose(ICharacter character)
     {
@@ -214,6 +213,13 @@ public class CharController : MonoBehaviour {
         {
             character.Defeated();
             character.SetSprite(_blockSprite);
+            DeleteCharacter(character);
         }
+    }
+
+    public void DeleteCharacter(ICharacter character)
+    {
+        _characters.Remove(character);
+        Destroy(character.gameObject);
     }
 }

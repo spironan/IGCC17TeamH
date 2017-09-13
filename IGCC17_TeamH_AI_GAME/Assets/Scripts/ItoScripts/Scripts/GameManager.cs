@@ -40,13 +40,8 @@ public class GameManager : MonoBehaviour
 
         _currentPlayer.GetCharController().IsPlaying(true);
 
-        GameObject obstaclePrefab = Resources.Load("Prefab/Obstacle") as GameObject;
-        Tile tile = _boardController.GetTile(1, 1);
-        tile.OnPiece(true);
-        Instantiate(obstaclePrefab, tile.transform.position, new Quaternion(0, 0, 0, 0));
-        tile = _boardController.GetTile(3, 3);
-        tile.OnPiece(true);
-        Instantiate(obstaclePrefab, tile.transform.position, new Quaternion(0, 0, 0, 0));
+        _boardController.AddObstacle(1, 1, true);
+        _boardController.AddObstacle(3, 3, true);
     }
 
     // Update is called once per frame
@@ -101,7 +96,7 @@ public class GameManager : MonoBehaviour
     private void Battle()
     {
         IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
-        if (BattleManager.Instance.Battle(_currentPlayer, defender))
+        if (BattleManager.Instance.Battle(_currentPlayer, defender, _boardController)) 
         {
             // winner is next turn
             // if currentPlayer is lose
@@ -121,11 +116,18 @@ public class GameManager : MonoBehaviour
         _currentPlayer.GetCharController().IsPlaying(true);
 
         _turnCount--;
+
+        // break obstacle
+        _boardController.RandomDestroyObstacle();
     }
 
     private void Result()
     {
         // result screen create
+        _player1.GetCharController().SetCurrentCharacter(null);
+        _player2.GetCharController().SetCurrentCharacter(null);
+        _player1.GetCharController().IsPlaying(false);
+        _player2.GetCharController().IsPlaying(false);
     }
 
     public int GetTurnNumber()
