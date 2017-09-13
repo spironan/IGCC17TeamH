@@ -16,6 +16,10 @@ public class BoardController : MonoBehaviour {
 
     Tile[,] _tileTable;
 
+    [SerializeField]
+    GameObject _obstaclePrefab;
+    List<Obstacle> _obstacles = new List<Obstacle>();
+
 	// Use this for initialization
 	void Start () {
         _tileTable = new Tile[_height, _width];
@@ -132,6 +136,38 @@ public class BoardController : MonoBehaviour {
         if (onMouseTile)
         {
             onMouseTile.SetColor(new Color(1, 1, 0, 0.5f));
+        }
+    }
+
+    public List<Obstacle> GetObstacles()
+    {
+        return _obstacles;
+    }
+
+    public void AddObstacle(int x, int y, bool dontDestroy = false)
+    {
+        Obstacle obs = Instantiate(_obstaclePrefab).GetComponent<Obstacle>();
+        obs.SetPosition(x, y);
+        GetTile(y, x).OnPiece(true);
+        obs.transform.position = GetTile(y, x).transform.position;
+        obs.DontDestroy(dontDestroy);
+
+        _obstacles.Add(obs);
+    }
+
+    public void RandomDestroyObstacle()
+    {
+        int obstacleCount = _obstacles.Count;
+        if (obstacleCount < 5) return;
+        for(int i = 0;i < 1000;i++)
+        {
+            if (obstacleCount == 0) break;
+            int element = Random.Range(0, obstacleCount);
+            if (_obstacles[element].DontDestroy()) continue;
+            GetTile(_obstacles[element].Y(), _obstacles[element].X()).OnPiece(false);
+            Destroy(_obstacles[element].gameObject);
+            _obstacles.RemoveAt(element);
+            break;
         }
     }
 }

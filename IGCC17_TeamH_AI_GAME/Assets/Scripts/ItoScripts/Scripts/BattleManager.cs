@@ -38,31 +38,36 @@ public class BattleManager
     /// <param name="challenger"></param>
     /// <param name="defender"></param>
     /// <returns></returns>
-    public bool Battle(IPlayer challenger, IPlayer defender)
+    public bool Battle(IPlayer challenger, IPlayer defender, BoardController board)
     {
         // 攻撃側の周囲を探索
         // 勝てるキャラクターと負けるキャラクターを探す
         // それぞれの状態を変更する
-
         ICharacter challengerChara = challenger.GetCharController().GetCurrentCharacter();
-        foreach (ICharacter def in defender.GetCharController().GetCharacters())
+        List<ICharacter> defList = defender.GetCharController().GetCharacters();
+        for (int i = defList.Count - 1; i >= 0; --i)
         {
-            if (def.GetMyState() == ICharacter.STATE.FROZEN) continue;
-            if (GetDistance(challengerChara, def) > challengerChara.GetAttackRange()) continue;
-            if (challengerChara.GetMyType() == def.GetMyType()) continue;
-            if (CheckCompatibility(challengerChara.GetMyType(), def.GetMyType()) == Compatibility.Strong)
+            if (defList[i].GetMyState() == ICharacter.STATE.FROZEN) continue;
+            if (GetDistance(challengerChara, defList[i]) > challengerChara.GetAttackRange()) continue;
+            if (challengerChara.GetMyType() == defList[i].GetMyType()) continue;
+            if (CheckCompatibility(challengerChara.GetMyType(), defList[i].GetMyType()) == Compatibility.Strong)
             {
                 if (challengerChara.GetMyState() == ICharacter.STATE.GREEN) continue;
+                board.AddObstacle(defList[i].X(), defList[i].Y());
                 challenger.GetCharController().CharaVictory(challengerChara);
-                defender.GetCharController().CharaLose(def);
+                defender.GetCharController().CharaLose(defList[i]);
+                
             }
             else
             {
-                if (def.GetMyState() == ICharacter.STATE.GREEN) continue;
-                defender.GetCharController().CharaVictory(def);
+                if (defList[i].GetMyState() == ICharacter.STATE.GREEN) continue;
+                board.AddObstacle(challengerChara.X(), challengerChara.Y());
+                defender.GetCharController().CharaVictory(defList[i]);
                 challenger.GetCharController().CharaLose(challengerChara);
+                
             }
         }
+        
         return true;
     }
 

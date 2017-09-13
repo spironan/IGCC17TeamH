@@ -213,6 +213,13 @@ public class CharController : MonoBehaviour {
         {
             character.Defeated();
             character.SetSprite(_blockSprite);
+            DeleteCharacter(character);
         }
+    }
+
+    public void DeleteCharacter(ICharacter character)
+    {
+        _characters.Remove(character);
+        Destroy(character.gameObject);
     }
 }

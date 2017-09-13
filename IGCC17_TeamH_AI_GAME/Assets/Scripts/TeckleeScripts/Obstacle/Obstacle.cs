@@ -5,6 +5,7 @@ public class Obstacle : MonoBehaviour
 {
     int _x, _y;
     SpriteRenderer _renderer;
+    bool _dontDestroy;
 
     public int X()
     {
@@ -30,4 +31,13 @@ public class Obstacle : MonoBehaviour
         return _renderer;
     }
 
+    public void DontDestroy(bool isDestroy)
+    {
+        _dontDestroy = isDestroy;
+    }
+
+    public bool DontDestroy()
+    {
+        return _dontDestroy;
+    }
 }
