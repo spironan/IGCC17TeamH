@@ -111,6 +111,7 @@ public class BoardController : MonoBehaviour {
             {
                 for (int i = 0; i < _height; i++)
                 {
+                    if (_tileTable[i, _width - 1].OnPiece()) continue;
                     _tileTable[i, _width - 1].SetColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
                 }
             }
@@ -118,6 +119,7 @@ public class BoardController : MonoBehaviour {
             {
                 for (int i = 0; i < _height; i++)
                 {
+                    if (_tileTable[i, 0].OnPiece()) continue;
                     _tileTable[i, 0].SetColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
                 }
             }

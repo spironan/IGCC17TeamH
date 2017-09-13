@@ -33,17 +33,28 @@ public class ICharacter : MonoBehaviour {
     bool _onMouse, _onBoard;
     SpriteRenderer _renderer;
     BoxCollider _collider;
+    Animator _animator;
 
     private void Start()
     {
         // Temporary placement
         // 仮置き
-        SetPosition(-1, -1);
         _moveRange = _attackRange = 1;
         _onMouse = _onBoard = false;
         _renderer = GetComponent<SpriteRenderer>();
         _collider = GetComponent<BoxCollider>();
+        _animator = GetComponent<Animator>();
         _condition = CONDITION.WAIT;
+
+        SetPosition(-1, -1);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            _animator.SetBool("Attack", !_animator.GetBool("Attack"));
+        }
     }
 
     public TYPE GetMyType()
@@ -92,6 +103,8 @@ public class ICharacter : MonoBehaviour {
     {
         _x = x;
         _y = y;
+
+        _renderer.sortingOrder = 6 - _y;
     }
 
     public bool OnMouse()
@@ -137,7 +150,7 @@ public class ICharacter : MonoBehaviour {
         //_renderer.color = new Color(0, 1, 0, 1);
         _collider.enabled = true; // should this be true
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        GetComponent<Animator>().enabled = false;
+        _animator.enabled = false;
     }
 
     public IEnumerator ConstantMove(Vector3 goal, int flame)

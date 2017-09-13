@@ -77,10 +77,15 @@ public class BattleManager
         return (Compatibility)result;
     }
 
-    int GetDistance(ICharacter c1, ICharacter c2)
+    public int GetDistance(ICharacter c1, ICharacter c2)
     {
-        int x = Mathf.Abs(c1.X() - c2.X());
-        int y = Mathf.Abs(c1.Y() - c2.Y());
+        return GetDistance(c1.X(), c1.Y(), c2.X(), c2.Y());
+    }
+
+    public int GetDistance(int x1, int y1, int x2, int y2)
+    {
+        int x = Mathf.Abs(x1 - x2);
+        int y = Mathf.Abs(y1 - y2);
         return x + y;
     }
 }

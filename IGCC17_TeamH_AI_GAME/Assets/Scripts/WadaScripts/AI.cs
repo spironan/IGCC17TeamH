@@ -78,6 +78,7 @@ public class AI : IPlayer
         foreach (ICharacter character in _charaController.GetCharacters())
         {
             if (character.GetMyState() == ICharacter.STATE.FROZEN) continue;
+            if (character.GetMyState() == ICharacter.STATE.GREEN) continue;
 
             for (int i = 0; i < 4; i++)
             {
@@ -103,14 +104,38 @@ public class AI : IPlayer
     int SumEvaluation(Data d, BoardController board)
     {
         int score = 0;
-        foreach (ICharacter charcter in _player.GetCharacters())
+        foreach (ICharacter character in _player.GetCharacters())
         {
             // バトルの相性を調べる
-            BattleManager.Compatibility compaibliy = BattleManager.Instance.CheckCompatibility(d._type, charcter.GetMyType());
+            int distance = BattleManager.Instance.GetDistance(d._x, d._y, character.X(), character.Y());
+            BattleManager.Compatibility compaibliy = BattleManager.Instance.CheckCompatibility(d._type, character.GetMyType());
+            if (distance == 1)
+            {
+                // スコアの割り当て
+                if (compaibliy == BattleManager.Compatibility.Strong) score += 20;
+                if (compaibliy == BattleManager.Compatibility.Weak) score -= 30;
+            }
 
-            // スコアの割り当て
-            if (compaibliy == BattleManager.Compatibility.Strong) score += 10;
-            if (compaibliy == BattleManager.Compatibility.Weak) score -= 10;
+            if(d._x == character.X())
+            {
+                int vecY = (character.Y() - d._y > 0) ? 1 : -1;
+                Tile tile = board.SlideMove(d._x, d._y, 0, vecY);
+                if(tile.Y() + vecY == character.Y())
+                {
+                    if (compaibliy == BattleManager.Compatibility.Strong) score += 10;
+                    if (compaibliy == BattleManager.Compatibility.Weak) score -= 15;
+                }
+            }
+            if (d._y == character.Y())
+            {
+                int vecX = (character.X() - d._x > 0) ? 1 : -1;
+                Tile tile = board.SlideMove(d._x, d._y, vecX, 0);
+                if (tile.X() + vecX == character.X())
+                {
+                    if (compaibliy == BattleManager.Compatibility.Strong) score += 10;
+                    if (compaibliy == BattleManager.Compatibility.Weak) score -= 15;
+                }
+            }
         }
 
         #region
