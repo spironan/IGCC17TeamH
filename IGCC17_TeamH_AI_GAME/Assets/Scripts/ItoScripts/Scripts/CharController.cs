@@ -124,7 +124,6 @@ public class CharController : MonoBehaviour {
             _currentChara.transform.position = new Vector3(-3, 0, 0);
             //_currentChara.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
         }
-        
     }
 
     public ICharacter SetCharacterOnBoard(ICharacter character)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleManager
 {
 
-    enum Compatibility
+    public enum Compatibility
     {
         Usually,
         Weak,
@@ -71,7 +71,7 @@ public class BattleManager
         return true;
     }
 
-    Compatibility CheckCompatibility(ICharacter.TYPE challenger, ICharacter.TYPE defender)
+    public Compatibility CheckCompatibility(ICharacter.TYPE challenger, ICharacter.TYPE defender)
     {
         int result = (challenger - defender + 3) % 3;
         return (Compatibility)result;
