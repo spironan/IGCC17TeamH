@@ -12,9 +12,9 @@ public class CharCountUIScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        zero = Resources.Load<Sprite>("Assets/GameUI/0");
-        one = Resources.Load<Sprite>("Assets/GameUI/1");
-        two = Resources.Load<Sprite>("Assets/GameUI/2");
+        zero = Resources.Load<Sprite>("Assets/GameUI/GamePlayUI/0");
+        one = Resources.Load<Sprite>("Assets/GameUI/GamePlayUI/1");
+        two = Resources.Load<Sprite>("Assets/GameUI/GamePlayUI/2");
         counter = GetComponent<Image>();
     }
 	

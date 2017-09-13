@@ -31,6 +31,22 @@ public class IPlayer : MonoBehaviour {
         }
     }
 
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (_charaController.IsPlaying())
+        {
+            _archerButton.interactable = _fighterButton.interactable = _magicianButton.interactable = true;
+            Debug.Log("Is This Called?");
+        }
+        else
+        {
+            _archerButton.interactable = _fighterButton.interactable = _magicianButton.interactable = false;
+            Debug.Log("Is This Called 2 ?");
+        }
+    }
+
     public virtual bool SelectCharacter(BoardController boardCon)
     {
         return true;
