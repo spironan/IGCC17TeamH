@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212633513437048386}
   - component: {fileID: 65851700762603226}
   - component: {fileID: 114460990734437328}
+  - component: {fileID: 95513624657341744}
   m_Layer: 0
   m_Name: Blue_Magician
   m_TagString: Untagged
@@ -54,6 +55,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &95513624657341744
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554269002850164}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114460990734437328
 MonoBehaviour:
   m_ObjectHideFlags: 1

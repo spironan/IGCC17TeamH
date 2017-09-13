@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ca43b949a04b54389e2ca306affffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: {x: 0, y: 0, z: 0.8}
+  rotateSpeed: {x: 0, y: 0, z: 0}
 --- !u!1 &354098213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,8 +2721,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633699fe8c4eb5140b2afa693a94cb8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  target: {x: 0, y: 30, z: 0}
+  speed: 0
+  target: {x: 0, y: 0, z: 0}
 --- !u!1 &1262286010
 GameObject:
   m_ObjectHideFlags: 0
