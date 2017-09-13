@@ -137,6 +137,7 @@ public class ICharacter : MonoBehaviour {
         //_renderer.color = new Color(0, 1, 0, 1);
         _collider.enabled = true; // should this be true
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        GetComponent<Animator>().enabled = false;
     }
 
     public IEnumerator ConstantMove(Vector3 goal, int flame)
