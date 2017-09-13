@@ -30,7 +30,7 @@ public class CharController : MonoBehaviour {
         _possessionFighter = 2;
         _possessionArcher = 2;
         _possessionMagician = 2;
-        //_fighterPrefab = _archerPrefab = _magicianPrefab = _wonFighterPrefab = _wonArcherPrefab = _wonMagicianPrefab = null;
+
         _currentChara = null;
 
         _blockSprite = Resources.Load<Sprite>("Assets/GameBlocks/block");
