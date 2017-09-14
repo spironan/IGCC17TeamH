@@ -40,7 +40,6 @@ public class ManualPlayer : IPlayer
                     if (GetPlayerID() == 2 && tile.X() != 0) return false;
                     character.transform.position = tile.transform.position;
                     _charaController.SetCharacterOnBoard(character);
-                    Instantiate(_summonEffect, character.transform.position, new Quaternion(0, 0, 0, 0));
                     if (GetPlayerID() == 1)
                         tile = boardCon.SlideMove(tile.X(), tile.Y(), -1, 0);
                     else
