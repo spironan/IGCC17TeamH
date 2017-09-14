@@ -55,7 +55,7 @@ public class ICharacter : MonoBehaviour {
         _animator.SetBool("Attack", isPlay);
     }
 
-    public void Death()
+    public void DeathAnimation()
     {
         _animator.SetTrigger("Death");
     }
@@ -155,6 +155,7 @@ public class ICharacter : MonoBehaviour {
         _collider.enabled = true; // should this be true
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         _animator.enabled = false;
+        GetComponent<BoxCollider>().size = new Vector3(5.12f, 5.12f, 1);
     }
 
     public IEnumerator ConstantMove(Vector3 goal, int flame)
