@@ -43,10 +43,16 @@ public class GameEndDisplayScript : MonoBehaviour {
 
             if (win || lose)
             {
-                if(win)
+                if (win)
+                {
                     winDisplay.SetActive(true);
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,AudioClipManager.GetInstance().GetAudioClip("Win_1"), false, "GenericGameSFX");
+                }
                 else
+                {
                     loseDisplay.SetActive(true);
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("Lose"), false, "GenericGameSFX");
+                }
                 background.SetActive(true);
                 genericDisplay.SetActive(true);
             }
