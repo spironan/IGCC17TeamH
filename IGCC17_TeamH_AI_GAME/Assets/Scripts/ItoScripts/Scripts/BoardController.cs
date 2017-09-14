@@ -167,7 +167,7 @@ public class BoardController : MonoBehaviour {
             int element = Random.Range(0, obstacleCount);
             if (_obstacles[element].DontDestroy()) continue;
             GetTile(_obstacles[element].Y(), _obstacles[element].X()).OnPiece(false);
-            Destroy(_obstacles[element].gameObject);
+            StartCoroutine(_obstacles[element].DeleteAndAnimation());
             _obstacles.RemoveAt(element);
             break;
         }

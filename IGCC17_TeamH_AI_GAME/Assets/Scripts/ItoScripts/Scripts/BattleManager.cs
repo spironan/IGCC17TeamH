@@ -70,6 +70,21 @@ public class BattleManager
         challengerChar.AttackAnimation(true);
         // カットイン挿入
         challenger.GetCharController().PlayCutIn(challengerChar);
+        switch (challengerChar.GetMyType())
+        {
+            case ICharacter.TYPE.FIGHTER:
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, 
+                    AudioClipManager.GetInstance().GetAudioClip("WarriorAtk_Voice_1"), false, "GenericGameSFX");
+                break;
+            case ICharacter.TYPE.ARCHER:
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                    AudioClipManager.GetInstance().GetAudioClip("ArcherAtk_Voice_1"), false, "GenericGameSFX");
+                break;
+            case ICharacter.TYPE.MAGICIAN:
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                    AudioClipManager.GetInstance().GetAudioClip("Mage_Voice_1"), false, "GenericGameSFX");
+                break;
+        }
         yield return new WaitForSeconds(3.0f);
         // 戦闘アニメーションを終了する
         foreach (ICharacter character in defList)
@@ -104,12 +119,42 @@ public class BattleManager
             {
                 board.AddObstacle(defList[i].X(), defList[i].Y());
                 defender.GetCharController().CharaLose(defList[i]);
+                switch (defList[i].GetMyType())
+                {
+                    case ICharacter.TYPE.FIGHTER:
+                        SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                            AudioClipManager.GetInstance().GetAudioClip("WarriorDmg_Voice_1"), false, "GenericGameSFX");
+                        break;
+                    case ICharacter.TYPE.ARCHER:
+                        SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                            AudioClipManager.GetInstance().GetAudioClip("ArcherDmg_Voice_1"), false, "GenericGameSFX");
+                        break;
+                    case ICharacter.TYPE.MAGICIAN:
+                        SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                            AudioClipManager.GetInstance().GetAudioClip("MageDmg_Voice_1"), false, "GenericGameSFX");
+                        break;
+                }
             }
         }
-            if (isChallengerDeath)
+        if (isChallengerDeath)
         {
             board.AddObstacle(challengerChar.X(), challengerChar.Y());
             challenger.GetCharController().CharaLose(challengerChar);
+            switch (challengerChar.GetMyType())
+            {
+                case ICharacter.TYPE.FIGHTER:
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                        AudioClipManager.GetInstance().GetAudioClip("WarriorDmg_Voice_2"), false, "GenericGameSFX");
+                    break;
+                case ICharacter.TYPE.ARCHER:
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                        AudioClipManager.GetInstance().GetAudioClip("ArcherDmg_Voice_2"), false, "GenericGameSFX");
+                    break;
+                case ICharacter.TYPE.MAGICIAN:
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                        AudioClipManager.GetInstance().GetAudioClip("MageDmg_Voice_2"), false, "GenericGameSFX");
+                    break;
+            }
         }
         // 戦後アニメーション
         _isBattle = BATTLE_STATE.Finished;
