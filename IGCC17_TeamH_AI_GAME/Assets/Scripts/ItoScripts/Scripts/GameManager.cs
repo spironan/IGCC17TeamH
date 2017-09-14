@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    enum GAME_CONDITION
+    public enum GAME_CONDITION
     {
         SELECT,
         ACTION,
@@ -152,5 +152,15 @@ public class GameManager : MonoBehaviour
     public int GetTurnNumber()
     {
         return _turnCount;
+    }
+
+    public void Pause(bool toPause)
+    {
+        _isStop = toPause;
+    }
+
+    public GAME_CONDITION GetGameCondition()
+    {
+        return _gameCondition;
     }
 }
