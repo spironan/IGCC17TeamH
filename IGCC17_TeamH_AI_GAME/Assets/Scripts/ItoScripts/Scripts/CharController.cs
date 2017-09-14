@@ -252,11 +252,8 @@ public class CharController : MonoBehaviour {
     }
     public void CharaLose(ICharacter character)
     {
-        if (character.GetMyState() == ICharacter.STATE.NEUTRAL)
-        {
-            character.Defeated();
-            DeleteCharacter(character);
-        }
+        character.Defeated();
+        DeleteCharacter(character);
     }
 
     public void DeleteCharacter(ICharacter character)

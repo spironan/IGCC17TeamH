@@ -78,25 +78,41 @@ public class BattleManager
         }
         challengerChar.AttackAnimation(false);
         // 戦わせる
+        bool isChallengerDeath = false;
         for (int i = defList.Count - 1; i >= 0; --i)
         {
             if (CheckCompatibility(challengerChar.GetMyType(), defList[i].GetMyType()) == Compatibility.Strong)
             {
-                board.AddObstacle(defList[i].X(), defList[i].Y());
                 challenger.GetCharController().CharaVictory(challengerChar);
-                defender.GetCharController().CharaLose(defList[i]);
+                if (defList[i].GetMyState() == ICharacter.STATE.GREEN) continue;
+                defList[i].DeathAnimation();
+                defList[i].ChangeState(ICharacter.STATE.FROZEN);
             }
             else
             {
                 if (defList[i].GetMyState() == ICharacter.STATE.GREEN) continue;
-                board.AddObstacle(challengerChar.X(), challengerChar.Y());
                 defender.GetCharController().CharaVictory(defList[i]);
-                challenger.GetCharController().CharaLose(challengerChar);
+                challengerChar.DeathAnimation();
+                challengerChar.ChangeState(ICharacter.STATE.FROZEN);
+                isChallengerDeath = true;
             }
+        }
+        yield return new WaitForSeconds(1.0f);
+        for (int i = defList.Count - 1; i >= 0; --i)
+        {
+            if(defList[i].GetMyState() == ICharacter.STATE.FROZEN)
+            {
+                board.AddObstacle(defList[i].X(), defList[i].Y());
+                defender.GetCharController().CharaLose(defList[i]);
+            }
+        }
+            if (isChallengerDeath)
+        {
+            board.AddObstacle(challengerChar.X(), challengerChar.Y());
+            challenger.GetCharController().CharaLose(challengerChar);
         }
         // 戦後アニメーション
         _isBattle = BATTLE_STATE.Finished;
-        yield return null;
     }
 
     public Compatibility CheckCompatibility(ICharacter.TYPE challenger, ICharacter.TYPE defender)
