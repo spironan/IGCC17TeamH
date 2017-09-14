@@ -37,13 +37,13 @@ public class IPlayer : MonoBehaviour {
     {
         if (_charaController.IsPlaying())
         {
-            _archerButton.interactable = _fighterButton.interactable = _magicianButton.interactable = true;
-            Debug.Log("Is This Called?");
+            if(!_archerButton.interactable || !_fighterButton.interactable || !_magicianButton.interactable)
+                _archerButton.interactable = _fighterButton.interactable = _magicianButton.interactable = true;
         }
         else
         {
-            _archerButton.interactable = _fighterButton.interactable = _magicianButton.interactable = false;
-            Debug.Log("Is This Called 2 ?");
+            if (_archerButton.interactable || _fighterButton.interactable || _magicianButton.interactable)
+                _archerButton.interactable = _fighterButton.interactable = _magicianButton.interactable = false;
         }
     }
 

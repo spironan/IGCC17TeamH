@@ -15,6 +15,10 @@ public class LoadSounds : MonoBehaviour
         //AudioClipManager.GetInstance().GenerateAudioClip("filename","filepath");
         //Keep Adding on The same line with the filename and filepath replaced respectively for new sounds
 
+        if (AudioClipManager.GetInstance().GetAudioClip("ArcherShootSFX") != null)
+            return; 
+        
+        //SFX
         AudioClipManager.GetInstance().GenerateAudioClip("ArcherShootSFX", "Attacks!/Archer_01");
         AudioClipManager.GetInstance().GenerateAudioClip("MageMagicSFX", "Attacks!/Mage_01");
         AudioClipManager.GetInstance().GenerateAudioClip("WarriorSlashSFX", "Attacks!/Warrior_01");
@@ -90,5 +94,11 @@ public class LoadSounds : MonoBehaviour
         AudioClipManager.GetInstance().GenerateAudioClip("WarriorWin_Voice_2", "Voice/Win!/Warrior_Win_02");
         AudioClipManager.GetInstance().GenerateAudioClip("WarriorWin_Voice_3", "Voice/Win!/Warrior_Win_03");
         AudioClipManager.GetInstance().GenerateAudioClip("WarriorWin_Voice_4", "Voice/Win!/Warrior_Win_04");
+        AudioClipManager.GetInstance().GenerateAudioClip("Lose", "Lose/lose");
+
+
+        //BGM
+        AudioClipManager.GetInstance().GenerateAudioClip("GameSceneBGM", "BGM/GameSceneBGM");
+        AudioClipManager.GetInstance().GenerateAudioClip("TitleSceneBGM", "BGM/TitleSceneBGM");
     }
 }

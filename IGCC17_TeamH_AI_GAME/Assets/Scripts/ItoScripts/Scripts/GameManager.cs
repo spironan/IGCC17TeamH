@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        SoundSystem.Instance.PlayClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("GameSceneBGM"), true, "BGMSource");
+
         _gameCondition = GAME_CONDITION.SELECT;
         _player1 = _player1Object.AddComponent<ManualPlayer>();
         _player2 = _player2Object.AddComponent<AI>();

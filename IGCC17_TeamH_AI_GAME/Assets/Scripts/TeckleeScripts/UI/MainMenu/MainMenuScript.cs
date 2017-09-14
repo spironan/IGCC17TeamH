@@ -37,6 +37,11 @@ public class MainMenuScript : MonoBehaviour
         StartCoroutine(HighlightButton());
     }
 
+    void Start()
+    {
+        SoundSystem.Instance.PlayClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("TitleSceneBGM"), true, "BGMSource");
+    }
+
     IEnumerator HighlightButton()
     {
         eventSystem.SetSelectedGameObject(null);
@@ -53,6 +58,7 @@ public class MainMenuScript : MonoBehaviour
             {
                 currSelect++;
                 buttons[(int)currSelect].Select();
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,AudioClipManager.GetInstance().GetAudioClip("Select_Hover"),false, "GenericGameSFX");
             }
         }
         else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown("up"))
@@ -61,11 +67,13 @@ public class MainMenuScript : MonoBehaviour
             {
                 currSelect--;
                 buttons[(int)currSelect].Select();
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("Select_Hover"), false, "GenericGameSFX");
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
-        { 
+        {
+            //SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("Select_Yes"), false, "GenericGameSFX");
             ExecuteEvents.Execute(buttons[(int)currSelect].gameObject, pointer, ExecuteEvents.submitHandler);
         }
 
