@@ -188,6 +188,23 @@ public class CharController : MonoBehaviour {
         character.SetOnBoard(true);
         _characters.Add(character);
         Instantiate(_summonEffect, character.transform.position, new Quaternion(0, 0, 0, 0));
+        //SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("ExtraSFX"), false, "GenericGameSFX");
+
+        switch (character.GetMyType())
+        {
+            case ICharacter.TYPE.FIGHTER:
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                    AudioClipManager.GetInstance().GetAudioClip("WarriorAtk_Voice_2"), false, "GenericGameSFX");
+                break;
+            case ICharacter.TYPE.ARCHER:
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                    AudioClipManager.GetInstance().GetAudioClip("ArcherAtk_Voice_2"), false, "GenericGameSFX");
+                break;
+            case ICharacter.TYPE.MAGICIAN:
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS,
+                    AudioClipManager.GetInstance().GetAudioClip("Mage_Voice_2"), false, "GenericGameSFX");
+                break;
+        }
         return character;
     }
 

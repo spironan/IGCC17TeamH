@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     int _turnCount;
 
+    GameEndDisplayScript _endScreen;
+
+    bool _isStop;
+
     // Use this for initialization
     void Start()
     {
@@ -44,15 +48,19 @@ public class GameManager : MonoBehaviour
 
         _boardController.AddObstacle(1, 1, true);
         _boardController.AddObstacle(3, 3, true);
+
+        _endScreen = GameObject.Find("EndScreenDisplay").GetComponent<GameEndDisplayScript>();
+        _isStop = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_turnCount <= 0)
+        if (_turnCount <= 0 || _endScreen.genericDisplay.active)
         {
             _gameCondition = GAME_CONDITION.RESULT;
         }
+        if (_isStop) return;
 
         switch (_gameCondition)
         {
@@ -66,7 +74,7 @@ public class GameManager : MonoBehaviour
                 Battle();
                 break;
             case GAME_CONDITION.ENDPROCESS:
-                EndProcess();
+                StartCoroutine(EndProcess());
                 break;
             case GAME_CONDITION.RESULT:
                 Result();
@@ -114,8 +122,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void EndProcess()
+    private IEnumerator EndProcess()
     {
+        _turnCount--;
+
+        // break obstacle
+        _boardController.RandomDestroyObstacle();
+        _isStop = true;
+        yield return new WaitForSeconds(2.0f);
+        _isStop = false;
         _gameCondition = GAME_CONDITION.SELECT;
         _player1.GetCharController().SetCurrentCharacter(null);
         _player2.GetCharController().SetCurrentCharacter(null);
@@ -123,11 +138,6 @@ public class GameManager : MonoBehaviour
         _player1.GetCharController().IsPlaying(false);
         _player2.GetCharController().IsPlaying(false);
         _currentPlayer.GetCharController().IsPlaying(true);
-
-        _turnCount--;
-
-        // break obstacle
-        _boardController.RandomDestroyObstacle();
     }
 
     private void Result()

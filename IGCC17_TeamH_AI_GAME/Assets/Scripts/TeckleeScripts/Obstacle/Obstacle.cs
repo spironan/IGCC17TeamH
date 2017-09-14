@@ -40,4 +40,11 @@ public class Obstacle : MonoBehaviour
     {
         return _dontDestroy;
     }
+
+    public IEnumerator DeleteAndAnimation()
+    {
+        GetComponent<Animator>().SetTrigger("Break");
+        yield return new WaitForSeconds(1.0f);
+        Destroy(gameObject);
+    }
 }

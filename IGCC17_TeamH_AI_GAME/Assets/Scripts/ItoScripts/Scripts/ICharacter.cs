@@ -165,6 +165,7 @@ public class ICharacter : MonoBehaviour {
         {
             yield return new WaitForSeconds(1.0f);
         }
+        SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("MoveSFX_2"), false, "GenericGameSFX");
         Vector3 vel = (goal - transform.position) / flame;      //
         for (int i = 0; i < flame; i++)
         {
