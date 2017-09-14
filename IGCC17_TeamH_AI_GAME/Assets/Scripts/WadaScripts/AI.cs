@@ -113,21 +113,29 @@ public class AI : IPlayer
                 // スコアの割り当て
                 if (compaibliy == BattleManager.Compatibility.Strong) score += 30;
                 if (compaibliy == BattleManager.Compatibility.Weak) score -= 15;
-                if(d._character && d._character.GetMyState() == ICharacter.STATE.GREEN)
-                {
-                    score -= 10;
-                }
+            }
+            if (d._character && d._character.GetMyState() == ICharacter.STATE.GREEN)
+            {
+                score -= 20;
             }
 
-            if(d._x == character.X())
+            if (d._x == character.X())
             {
                 int vecY = (character.Y() - d._y > 0) ? 1 : -1;
                 Tile tile = board.SlideMove(d._x, d._y, 0, vecY);
-                if(tile.Y() + vecY == character.Y())
+                if (tile.Y() + vecY == character.Y())
                 {
                     if (compaibliy == BattleManager.Compatibility.Strong) score += 5;
                     else if (compaibliy == BattleManager.Compatibility.Weak) score -= 5;
                     else score += 3;
+                    if (d._character)
+                    {
+                        if (d._character.X() == d._x)
+                        {
+                            if (compaibliy == BattleManager.Compatibility.Strong) score += 5;
+                            else if (compaibliy == BattleManager.Compatibility.Weak) score -= 5;
+                        }
+                    }
                 }
             }
             if (d._y == character.Y())
@@ -139,11 +147,19 @@ public class AI : IPlayer
                     if (compaibliy == BattleManager.Compatibility.Strong) score += 5;
                     else if (compaibliy == BattleManager.Compatibility.Weak) score -= 5;
                     else score += 3;
+                    if (d._character)
+                    {
+                        if (d._character.Y() == d._y)
+                        {
+                            if (compaibliy == BattleManager.Compatibility.Strong) score += 5;
+                            else if (compaibliy == BattleManager.Compatibility.Weak) score -= 5;
+                        }
+                    }
                 }
             }
         }
 
-        for (int i = -1; i <= 1; i++) 
+        for (int i = -1; i <= 1; i++)
         {
             int y = d._y + i;
             Tile tile = board.GetTile(y, board.GetWidth() - 1);
@@ -180,6 +196,14 @@ public class AI : IPlayer
         return _data[0];
     }
 
+    bool _isStop = false;
+    IEnumerator Wait(float seconds)
+    {
+        _isStop = true;
+        yield return new WaitForSeconds(seconds);
+        _isStop = false;
+    }
+
     // キャラの設置
     public override bool SelectCharacter(BoardController boardCon)
     {
@@ -191,6 +215,16 @@ public class AI : IPlayer
             PutCheck(boardCon);
             MoveCheck(boardCon);
             SortEva();
+            if (_data.Count >= 3)
+            {
+                int elem = Random.Range(0, 3);
+                elem = (elem != 0) ? 0 : 1;
+                _data[0] = _data[elem];
+            }
+        }
+        if (_isStop)
+        {
+            return false;
         }
 
         if(_data.Count == 0)
@@ -198,10 +232,6 @@ public class AI : IPlayer
             return true;
         }
 
-        if(_data.Count >= 5)
-        {
-            _data[0] = _data[Random.Range(0, 3)];
-        }
 
         /// キャラを新規投入か既存キャラの移動かを決める
         // 新規に追加する場合
@@ -220,6 +250,7 @@ public class AI : IPlayer
             // ボード上に追加
             character.transform.position = tile.transform.position;     //
             _charaController.SetCharacterOnBoard(character);
+            StartCoroutine(Wait(1.0f));
             return false;
         }//------
         else if (_data[0]._state == STATE.MOVE)
@@ -230,26 +261,12 @@ public class AI : IPlayer
             character = _charaController.GetCurrentCharacter();
             // 一度false 
             boardCon.GetTile(character.Y(), character.X()).OnPiece(false);
-            #region
-            // （評価を元に）
-            // マウス座標ではなく
-            // 自分（AI）でポジションを指定
-
-            // CharControllerのGenerationでキャラを生成
-            // どのキャラを動かすか選択
-            //_charaController.Generation(0);
-            #endregion
-
-            // スライドさせる方向を決める
-            //tile = boardCon.SlideMove(character.X(), character.Y(), 1, 0);
-            // 移動先のポジションではなく、
-            // 移動先の方向を指定
-        }  //------
+        }
 
 
         // 共通の処理
         // キャラを動かす処理
-         character = _charaController.GetCurrentCharacter();
+        character = _charaController.GetCurrentCharacter();
         if(_data[0]._state == STATE.PUT)
             character.transform.position = boardCon.GetTile(_data[0]._y, 0).transform.position;
         Tile moveTo = boardCon.GetTile(_data[0]._y, _data[0]._x);

@@ -60,6 +60,15 @@ public class GameManager : MonoBehaviour
         {
             _gameCondition = GAME_CONDITION.RESULT;
         }
+        if (_gameCondition == GAME_CONDITION.SELECT)
+        {
+            _boardController.TileColorChange(_currentPlayer);
+        }
+        else
+        {
+            _boardController.TileColorChange(null);
+        }
+
         if (_isStop) return;
 
         switch (_gameCondition)
@@ -86,7 +95,6 @@ public class GameManager : MonoBehaviour
 
     private void SelectCharacter()
     {
-        _boardController.TileColorChange(_currentPlayer);
         if (_currentPlayer.SelectCharacter(_boardController))
         {
             _gameCondition = GAME_CONDITION.ACTION;

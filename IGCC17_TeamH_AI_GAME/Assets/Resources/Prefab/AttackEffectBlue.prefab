@@ -9,62 +9,49 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1101938386141018}
+  m_RootGameObject: {fileID: 1543735013624542}
   m_IsPrefabParent: 1
---- !u!1 &1101938386141018
+--- !u!1 &1543735013624542
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4716584162561100}
-  - component: {fileID: 212147893573532950}
-  - component: {fileID: 65460872155769038}
-  - component: {fileID: 114714984315617632}
-  - component: {fileID: 95864290254098928}
+  - component: {fileID: 4872549482792028}
+  - component: {fileID: 212118851354943520}
+  - component: {fileID: 95598893884499724}
+  - component: {fileID: 114709325304231746}
   m_Layer: 0
-  m_Name: Red_Archer
+  m_Name: AttackEffectBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4716584162561100
+--- !u!4 &4872549482792028
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101938386141018}
+  m_GameObject: {fileID: 1543735013624542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65460872155769038
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101938386141018}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &95864290254098928
+--- !u!95 &95598893884499724
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101938386141018}
+  m_GameObject: {fileID: 1543735013624542}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ad6686d9997c31b4dba2c1c57c3cdeba, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3be82d1fb3ca48f4dacdd54c87335df6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -72,26 +59,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114714984315617632
+--- !u!114 &114709325304231746
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101938386141018}
+  m_GameObject: {fileID: 1543735013624542}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27fe0a40d308bdf4b9b0c924af1868a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 598318d612017134ea2b4ee167a3d383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myType: 1
-  _attackEffect: {fileID: 1512249478189592, guid: 4af20ac6e2074fa408d1c83f786145b6,
-    type: 2}
---- !u!212 &212147893573532950
+--- !u!212 &212118851354943520
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101938386141018}
+  m_GameObject: {fileID: 1543735013624542}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -117,13 +101,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 858747ead9d81064e82e1ffe30699c23, type: 3}
+  m_SortingOrder: 8
+  m_Sprite: {fileID: 21300000, guid: a43cb7f44526a904a834064a27cde867, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

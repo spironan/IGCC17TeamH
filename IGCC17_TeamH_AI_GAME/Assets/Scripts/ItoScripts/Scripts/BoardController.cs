@@ -87,7 +87,9 @@ public class BoardController : MonoBehaviour {
 
     public void TileColorChange(IPlayer player)
     {
-        ICharacter character = player.GetCharController().GetCurrentCharacter();
+        ICharacter character = null;
+        if (player)
+            character = player.GetCharController().GetCurrentCharacter();
         Tile onMouseTile = null;
         for (int i = 0; i < _height; i++)
         {

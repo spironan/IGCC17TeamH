@@ -34,6 +34,8 @@ public class ICharacter : MonoBehaviour {
     SpriteRenderer _renderer;
     BoxCollider _collider;
     Animator _animator;
+    [SerializeField]
+    GameObject _attackEffect;
 
     private void Start()
     {
@@ -47,8 +49,15 @@ public class ICharacter : MonoBehaviour {
         _condition = CONDITION.WAIT;
 
         SetPosition(-1, -1);
-       
     }
+
+    public void AttackEffect(Vector3 position)
+    {
+        GameObject effect = Instantiate(_attackEffect);
+        effect.transform.position = position;
+        effect.GetComponent<Animator>().SetTrigger("Attack");
+    }
+
 
     public void AttackAnimation(bool isPlay)
     {

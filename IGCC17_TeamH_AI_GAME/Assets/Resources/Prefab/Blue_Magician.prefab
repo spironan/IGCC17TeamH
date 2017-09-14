@@ -84,6 +84,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myType: 2
+  _attackEffect: {fileID: 1543735013624542, guid: cfbc8ed5da609154abff0b8c37496ea2,
+    type: 2}
 --- !u!212 &212633513437048386
 SpriteRenderer:
   m_ObjectHideFlags: 1

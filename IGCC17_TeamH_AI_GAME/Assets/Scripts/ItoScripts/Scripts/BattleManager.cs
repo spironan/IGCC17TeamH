@@ -99,6 +99,7 @@ public class BattleManager
             if (CheckCompatibility(challengerChar.GetMyType(), defList[i].GetMyType()) == Compatibility.Strong)
             {
                 challenger.GetCharController().CharaVictory(challengerChar);
+                challengerChar.AttackEffect(defList[i].transform.position);
                 if (defList[i].GetMyState() == ICharacter.STATE.GREEN) continue;
                 defList[i].DeathAnimation();
                 defList[i].ChangeState(ICharacter.STATE.FROZEN);
@@ -108,6 +109,7 @@ public class BattleManager
                 if (defList[i].GetMyState() == ICharacter.STATE.GREEN) continue;
                 defender.GetCharController().CharaVictory(defList[i]);
                 challengerChar.DeathAnimation();
+                defList[i].AttackEffect(challengerChar.transform.position);
                 challengerChar.ChangeState(ICharacter.STATE.FROZEN);
                 isChallengerDeath = true;
             }
