@@ -96,6 +96,12 @@ public class GameManager : MonoBehaviour
     private void Action()
     {
         ICharacter character = _currentPlayer.GetCharController().GetCurrentCharacter();
+        if(!character)
+        {
+            _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+            _gameCondition = GAME_CONDITION.ENDPROCESS;
+            return;
+        }
         if (character.GetCondition() == ICharacter.CONDITION.END)
         {
             character.ChangeCondition(ICharacter.CONDITION.WAIT);

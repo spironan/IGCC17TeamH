@@ -111,11 +111,11 @@ public class AI : IPlayer
             if (distance == 1)
             {
                 // スコアの割り当て
-                if (compaibliy == BattleManager.Compatibility.Strong) score += 20;
-                if (compaibliy == BattleManager.Compatibility.Weak) score -= 30;
+                if (compaibliy == BattleManager.Compatibility.Strong) score += 30;
+                if (compaibliy == BattleManager.Compatibility.Weak) score -= 15;
                 if(d._character && d._character.GetMyState() == ICharacter.STATE.GREEN)
                 {
-                    score -= 20;
+                    score -= 10;
                 }
             }
 
@@ -125,8 +125,9 @@ public class AI : IPlayer
                 Tile tile = board.SlideMove(d._x, d._y, 0, vecY);
                 if(tile.Y() + vecY == character.Y())
                 {
-                    if (compaibliy == BattleManager.Compatibility.Strong) score += 10;
-                    if (compaibliy == BattleManager.Compatibility.Weak) score -= 15;
+                    if (compaibliy == BattleManager.Compatibility.Strong) score += 5;
+                    else if (compaibliy == BattleManager.Compatibility.Weak) score -= 5;
+                    else score += 3;
                 }
             }
             if (d._y == character.Y())
@@ -135,9 +136,23 @@ public class AI : IPlayer
                 Tile tile = board.SlideMove(d._x, d._y, vecX, 0);
                 if (tile.X() + vecX == character.X())
                 {
-                    if (compaibliy == BattleManager.Compatibility.Strong) score += 10;
-                    if (compaibliy == BattleManager.Compatibility.Weak) score -= 15;
+                    if (compaibliy == BattleManager.Compatibility.Strong) score += 5;
+                    else if (compaibliy == BattleManager.Compatibility.Weak) score -= 5;
+                    else score += 3;
                 }
+            }
+        }
+
+        for (int i = -1; i <= 1; i++) 
+        {
+            int y = d._y + i;
+            Tile tile = board.GetTile(y, board.GetWidth() - 1);
+            if (!tile || tile.OnPiece()) continue;
+            tile = board.SlideMove(tile.X(), tile.Y(), -1, 0);
+            if (BattleManager.Instance.GetDistance(tile.X(), tile.Y(), d._x, d._y) <= 1)
+            {
+                score -= 10;
+                break;
             }
         }
 
@@ -178,7 +193,15 @@ public class AI : IPlayer
             SortEva();
         }
 
+        if(_data.Count == 0)
+        {
+            return true;
+        }
 
+        if(_data.Count >= 5)
+        {
+            _data[0] = _data[Random.Range(0, 3)];
+        }
 
         /// キャラを新規投入か既存キャラの移動かを決める
         // 新規に追加する場合
@@ -227,6 +250,8 @@ public class AI : IPlayer
         // 共通の処理
         // キャラを動かす処理
          character = _charaController.GetCurrentCharacter();
+        if(_data[0]._state == STATE.PUT)
+            character.transform.position = boardCon.GetTile(_data[0]._y, 0).transform.position;
         Tile moveTo = boardCon.GetTile(_data[0]._y, _data[0]._x);
         StartCoroutine(character.ConstantMove(moveTo.transform.position, 10));
         // 内部的な座標の設定
