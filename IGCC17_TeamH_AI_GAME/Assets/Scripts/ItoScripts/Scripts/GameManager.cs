@@ -95,14 +95,21 @@ public class GameManager : MonoBehaviour
 
     private void Battle()
     {
-        IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
-        if (BattleManager.Instance.Battle(_currentPlayer, defender, _boardController)) 
+        // バトルアニメーション再生
+        // カットイン挿入
+        // バトル結果を出力
+        // 結果に応じて敗北アニメーション
+        if (BattleManager.Instance._isBattle == BattleManager.BATTLE_STATE.None)
         {
-            // winner is next turn
-            // if currentPlayer is lose
-            _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+            IPlayer defender = (_currentPlayer == _player1) ? _player2 : _player1;
+            StartCoroutine(BattleManager.Instance.BattleFlow(_currentPlayer, defender, _boardController));
         }
-        _gameCondition = GAME_CONDITION.ENDPROCESS;
+        else if(BattleManager.Instance._isBattle == BattleManager.BATTLE_STATE.Finished)
+        {
+            _currentPlayer = (_currentPlayer == _player1) ? _player2 : _player1;
+            _gameCondition = GAME_CONDITION.ENDPROCESS;
+            BattleManager.Instance._isBattle = BattleManager.BATTLE_STATE.None;
+        }
     }
 
     private void EndProcess()

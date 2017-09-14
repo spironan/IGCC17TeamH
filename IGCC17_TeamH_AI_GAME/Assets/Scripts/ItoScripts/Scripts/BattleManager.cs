@@ -12,6 +12,15 @@ public class BattleManager
         Strong
     };
 
+    public enum BATTLE_STATE
+    {
+        None,
+        Play,
+        Finished
+    }
+
+
+    public BATTLE_STATE _isBattle;
     static BattleManager _instance;
 
     public static BattleManager Instance
@@ -28,47 +37,66 @@ public class BattleManager
 
     BattleManager()
     {
-
+        _isBattle = BATTLE_STATE.None;
     }
 
-
-    /// <summary>
-    /// won returned true
-    /// </summary>
-    /// <param name="challenger"></param>
-    /// <param name="defender"></param>
-    /// <returns></returns>
-    public bool Battle(IPlayer challenger, IPlayer defender, BoardController board)
+    public IEnumerator BattleFlow(IPlayer challenger, IPlayer defender, BoardController board)
     {
-        // 攻撃側の周囲を探索
-        // 勝てるキャラクターと負けるキャラクターを探す
-        // それぞれの状態を変更する
-        ICharacter challengerChara = challenger.GetCharController().GetCurrentCharacter();
-        List<ICharacter> defList = defender.GetCharController().GetCharacters();
+        _isBattle = BATTLE_STATE.Play;
+        ICharacter challengerChar = challenger.GetCharController().GetCurrentCharacter();
+        if (challengerChar.GetMyState() == ICharacter.STATE.GREEN)
+        {
+            _isBattle = BATTLE_STATE.Finished;
+            yield break;
+        }
+        List<ICharacter> defList = new List<ICharacter>();
+        foreach(ICharacter character in defender.GetCharController().GetCharacters())
+        {
+            if (character.GetMyState() == ICharacter.STATE.FROZEN) continue;
+            if (GetDistance(challengerChar, character) > challengerChar.GetAttackRange()) continue;
+            if (challengerChar.GetMyType() == character.GetMyType()) continue;
+            defList.Add(character);
+        }
+        if(defList.Count == 0)
+        {
+            _isBattle = BATTLE_STATE.Finished;
+            yield break;
+        }
+        // 戦闘アニメーションを再生する
+        foreach(ICharacter character in defList)
+        {
+            character.AttackAnimation(true);
+        }
+        challengerChar.AttackAnimation(true);
+        // カットイン挿入
+        challenger.GetCharController().PlayCutIn(challengerChar);
+        yield return new WaitForSeconds(3.0f);
+        // 戦闘アニメーションを終了する
+        foreach (ICharacter character in defList)
+        {
+            character.AttackAnimation(false);
+        }
+        challengerChar.AttackAnimation(false);
+        // 戦わせる
         for (int i = defList.Count - 1; i >= 0; --i)
         {
-            if (defList[i].GetMyState() == ICharacter.STATE.FROZEN) continue;
-            if (GetDistance(challengerChara, defList[i]) > challengerChara.GetAttackRange()) continue;
-            if (challengerChara.GetMyType() == defList[i].GetMyType()) continue;
-            if (CheckCompatibility(challengerChara.GetMyType(), defList[i].GetMyType()) == Compatibility.Strong)
+            if (CheckCompatibility(challengerChar.GetMyType(), defList[i].GetMyType()) == Compatibility.Strong)
             {
-                if (challengerChara.GetMyState() == ICharacter.STATE.GREEN) continue;
                 board.AddObstacle(defList[i].X(), defList[i].Y());
-                challenger.GetCharController().CharaVictory(challengerChara);
+                challenger.GetCharController().CharaVictory(challengerChar);
                 defender.GetCharController().CharaLose(defList[i]);
-                
             }
             else
             {
                 if (defList[i].GetMyState() == ICharacter.STATE.GREEN) continue;
-                board.AddObstacle(challengerChara.X(), challengerChara.Y());
+                board.AddObstacle(challengerChar.X(), challengerChar.Y());
                 defender.GetCharController().CharaVictory(defList[i]);
-                challenger.GetCharController().CharaLose(challengerChara);
-                
+                challenger.GetCharController().CharaLose(challengerChar);
             }
         }
-        
-        return true;
+        // 戦後アニメーション
+        _isBattle = BATTLE_STATE.Finished;
+        yield return null;
     }
 
     public Compatibility CheckCompatibility(ICharacter.TYPE challenger, ICharacter.TYPE defender)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharController : MonoBehaviour {
 
@@ -19,11 +20,17 @@ public class CharController : MonoBehaviour {
     Sprite _wonArcherSprite;
     Sprite _wonMagicianSprite;
 
-    Sprite _blockSprite;
+    Sprite _cutInFighter;
+    Sprite _cutInArcher;
+    Sprite _cutInMagician;
+
+    GameObject _cutIn;
 
     IPlayer _owner;
 
     bool _isPlaying;
+
+    GameObject _summonEffect;
     
     // Use this for initialization
     void Start () {
@@ -32,8 +39,8 @@ public class CharController : MonoBehaviour {
         _possessionMagician = 2;
 
         _currentChara = null;
-
-        _blockSprite = Resources.Load<Sprite>("Assets/GameBlocks/block");
+        _cutIn = GameObject.Find("CutIn");
+        _summonEffect = Resources.Load("Prefab/SummonEffect") as GameObject;
     }
 
     public IPlayer GetOwner()
@@ -53,6 +60,10 @@ public class CharController : MonoBehaviour {
             _wonArcherSprite = Resources.Load<Sprite>("Assets/GameBlocks/Blue03");
             _wonMagicianSprite = Resources.Load<Sprite>("Assets/GameBlocks/Blue02");
 
+            _cutInFighter = Resources.Load<Sprite>("Assets/GameCharacter/slide/Warrior_Blue_slide");
+            _cutInArcher = Resources.Load<Sprite>("Assets/GameCharacter/slide/Archer_Blue_slide");
+            _cutInMagician = Resources.Load<Sprite>("Assets/GameCharacter/slide/Magic_Blue_slide");
+
             Debug.Log("Set Prefabs For Player!");
         }
         else if (owner.GetPlayerID() == 2)
@@ -65,8 +76,36 @@ public class CharController : MonoBehaviour {
             _wonArcherSprite = Resources.Load<Sprite>("Assets/GameBlocks/Red03");
             _wonMagicianSprite = Resources.Load<Sprite>("Assets/GameBlocks/Red02");
 
+            _cutInFighter = Resources.Load<Sprite>("Assets/GameCharacter/slide/Warrior_Red_slide");
+            _cutInArcher = Resources.Load<Sprite>("Assets/GameCharacter/slide/Archer_Red_slide");
+            _cutInMagician = Resources.Load<Sprite>("Assets/GameCharacter/slide/Magic_Red_slide");
+
             Debug.Log("Set Prefabs For AI!");
         }
+    }
+
+    public void PlayCutIn(ICharacter character)
+    {
+        Image image = _cutIn.GetComponent<Image>();
+        image.enabled = true;
+        switch (character._myType)
+        {
+            case ICharacter.TYPE.FIGHTER:
+                image.sprite = _cutInFighter;
+                break;
+            case ICharacter.TYPE.ARCHER:
+                image.sprite = _cutInArcher;
+                break;
+            case ICharacter.TYPE.MAGICIAN:
+                image.sprite = _cutInMagician;
+                break;
+            default:
+                break;
+        }
+        if(_owner.GetPlayerID() == 1)
+            _cutIn.GetComponent<Animator>().SetTrigger("Blue");
+        else
+            _cutIn.GetComponent<Animator>().SetTrigger("Red");
     }
 
     public ICharacter GetCurrentCharacter()
@@ -148,6 +187,7 @@ public class CharController : MonoBehaviour {
         }
         character.SetOnBoard(true);
         _characters.Add(character);
+        Instantiate(_summonEffect, character.transform.position, new Quaternion(0, 0, 0, 0));
         return character;
     }
 
@@ -215,7 +255,6 @@ public class CharController : MonoBehaviour {
         if (character.GetMyState() == ICharacter.STATE.NEUTRAL)
         {
             character.Defeated();
-            character.SetSprite(_blockSprite);
             DeleteCharacter(character);
         }
     }

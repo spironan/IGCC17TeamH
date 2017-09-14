@@ -47,15 +47,19 @@ public class ICharacter : MonoBehaviour {
         _condition = CONDITION.WAIT;
 
         SetPosition(-1, -1);
+       
     }
 
-    private void Update()
+    public void AttackAnimation(bool isPlay)
     {
-        if(Input.GetKeyUp(KeyCode.Space))
-        {
-            _animator.SetBool("Attack", !_animator.GetBool("Attack"));
-        }
+        _animator.SetBool("Attack", isPlay);
     }
+
+    public void Death()
+    {
+        _animator.SetTrigger("Death");
+    }
+    
 
     public TYPE GetMyType()
     {

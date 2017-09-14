@@ -78,7 +78,6 @@ public class AI : IPlayer
         foreach (ICharacter character in _charaController.GetCharacters())
         {
             if (character.GetMyState() == ICharacter.STATE.FROZEN) continue;
-            if (character.GetMyState() == ICharacter.STATE.GREEN) continue;
 
             for (int i = 0; i < 4; i++)
             {
@@ -114,6 +113,10 @@ public class AI : IPlayer
                 // スコアの割り当て
                 if (compaibliy == BattleManager.Compatibility.Strong) score += 20;
                 if (compaibliy == BattleManager.Compatibility.Weak) score -= 30;
+                if(d._character && d._character.GetMyState() == ICharacter.STATE.GREEN)
+                {
+                    score -= 20;
+                }
             }
 
             if(d._x == character.X())
